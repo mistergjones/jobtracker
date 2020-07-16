@@ -1,0 +1,30 @@
+{
+    "name": "jobtracker",
+    "version": "1.0.0",
+    "description": "Job Tracker API app",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "github",
+        "api",
+        "job",
+        "tracker",
+        "node",
+        "express",
+        "axios"
+    ],
+    "author": "Glen Jones",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.19.2",
+        "bcrypt": "^5.0.0",
+        "body-parser": "^1.19.0",
+        "ejs": "^3.1.3",
+        "express": "^4.17.1",
+        "pg": "^8.3.0",
+        "pg-escape": "^0.2.0",
+        "underscore": "^1.10.2"
+    }
+}
