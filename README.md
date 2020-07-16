@@ -13,9 +13,13 @@
 
 ## General info
 
-This application to demonstrate both client side and Server side technologies within in team environment to encapsulate the following:
+This application to demonstrate both client side and Server side technologies to encapsulate the following key ideas:
 
--   t.b.c
+-   an application to source a RESTFUL api and store job adverts in a database.
+-   Jobs will focus on IT/Software Devloper roles.
+-   a user to register/login and view jobs.
+-   a user to save jobs that they will apply for
+-   a user to see all saved jobs, track what they have applied for.
 
 ## JobTracker Link
 
