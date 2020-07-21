@@ -21,7 +21,7 @@ CREATE TABLE users (
     UNIQUE (email)
 );
 
-INSERT INTO user (firstname, lastname, email, password) VALUES 
+INSERT INTO users (firstname, lastname, email, password) VALUES 
 ('glen','jones','gj@gj.com','password');
 
 CREATE TABLE jobs (

@@ -1,66 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-        />
-        <title>Job Tracker - Login</title>
-    </head>
-    <body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Job Tracker - Login</title>
+  </head>
+  <body>
+    <div id="login-box">
+      <div class="left">
         <h1>Login</h1>
-
+        <label class="error"></label>
         <ul>
-            <% if (typeof errors != 'undefined') { %> <% errors.forEach(error =>
-            { %>
-            <li><%= error.message %></li>
-            <% }) %> <% } %>
+          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => {
+          %>
+          <li><%= error.message %></li>
+          <% }) %> <% } %>
         </ul>
 
         <ul>
-            <% if(messages.success_msg) { %>
-            <li><%= messages.success_msg%></li>
-            <%}%>
+          <% if(messages.success_msg) { %>
+          <li><%= messages.success_msg%></li>
+          <%}%>
         </ul>
 
         <ul>
-            <!-- passport will store any messages in this messages object here in the session -->
-            <% if(messages.error) { %>
-            <li>
-                <%=messages.error%>
-            </li>
-            <%}%>
+          <!-- passport will store any messages in this messages object here in the session -->
+          <% if(messages.error) { %>
+          <li>
+            <%=messages.error%>
+          </li>
+          <%}%>
         </ul>
 
-        <form action="/users/login" method="POST">
-            <div>
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                    required
-                />
-            </div>
+        <form action="/users/login" method="POST" id="login-form">
+          <div class="input-container">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              autocomplete="email"
+              required
+            />
+            <label for="email">Email</label>
+          </div>
 
-            <div>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    required
-                />
-            </div>
+          <div class="input-container">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="off"
+              aria-describedby="password-constraints"
+              required
+            />
+            <label for="password" required>Password</label>
+          </div>
+          <div>
+            <button
+              id="toggle-password"
+              type="button"
+              aria-label="Show password as plain text. Warning: this will display your password on the screen."
+            >
+              Show password
+            </button>
+          </div>
 
-            <div>
-                <input type="submit" value="Login" />
-            </div>
-            <div>
-                <a href="/users/register">Register</a>
-            </div>
+          <div>
+            <input type="submit" value="Login" id="signin" />
+          </div>
+          <div>
+            <a href="/users/register">Register</a>
+          </div>
         </form>
-    </body>
+      </div>
+      <div class="right"></div>
+    </div>
+    <script src="/javascripts/login.js"></script>
+  </body>
 </html>
