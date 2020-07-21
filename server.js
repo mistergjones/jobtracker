@@ -16,6 +16,7 @@ const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
 
+const axios = require("axios");
 initializePassport(passport);
 
 // assign PORT 4000 in development mode
@@ -153,6 +154,40 @@ app.post(
     failureFlash: true,
   })
 );
+app.get("/jobs", async (req, res) => {
+  const response = await axios.get("https://jobs.github.com/positions.json");
+  const listings = response.data;
+  listings.forEach((listing) => {
+    console.log(listing.id);
+    pool.query(
+      `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+                  VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+      [
+        listing.id,
+        listing.type,
+        listing.url,
+        listing.created_at,
+        listing.company,
+        listing.company_url,
+        listing.location,
+        listing.title,
+        listing.description,
+        listing.how_to_apply,
+        listing.company_logo,
+      ],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        // console.log(results.rows);
+        // // pass a flash message to our redirect page
+        // req.flash("success_msg", "You are now registered. Please log in");
+        // res.redirect("/users/login");
+      }
+    );
+  });
+  res.send(response.data[0]);
+});
 
 // check if user is authenticated user
 function checkAuthenticated(req, res, next) {
@@ -171,6 +206,20 @@ function checkNotAuthenticated(req, res, next) {
   // otherwise if there are not authetnicted, go to login page,
   res.redirect("/users/login");
 }
+
+app.get("/auth/facebook", passport.authenticate("facebook"));
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+app.get(
+  "/auth/facebook/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "/users/dashboard",
+    failureRedirect: "/users/login",
+  })
+);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

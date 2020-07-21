@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-        />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
 
-        <title>Dashboard</title>
+    <title>Dashboard</title>
 
-        <style>
-            h1 {
-                text-align: center;
-            }
-            .grid-container {
-                display: grid;
-                grid-gap: 10px;
-                grid-template-columns: auto auto;
-                background-color: #2196f3;
-                padding: 10px;
-            }
+    <style>
+      h1 {
+        text-align: center;
+      }
+      .grid-container {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: auto auto;
+        background-color: #2196f3;
+        padding: 10px;
+      }
 
-            .grid-item {
-                background-color: rgba(255, 255, 255, 0.8);
-                border: 1px solid rgba(0, 0, 0, 0.8);
-                padding: 5px;
-                font-size: 30px;
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>
-            <!-- make the first letter of the firstname uppercase -->
-            Welcome <%= user.charAt(0).toUpperCase()+ user.slice(1)%> to the
-            DASHBOARD
-        </h1>
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 5px;
+        font-size: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      <!-- make the first letter of the firstname uppercase -->
+      Welcome <%= user.charAt(0).toUpperCase()+ user.slice(1)%> to the DASHBOARD
+    </h1>
 
-        <div class="grid-container">
-            <div class="grid-item"><button>Search for new jobds</button></div>
-            <div class="grid-item"><button>Refresh API</button></div>
-            <div class="grid-item"><button>View Jobs Saved</button></div>
-            <div class="grid-item"><button>View Jobs Not Saved</button></div>
-            <div class="grid-item"><button>View Appled Jobs</button></div>
-            <div class="grid-item"><button>Search for new jobs</button></div>
-        </div>
+    <div class="grid-container">
+      <div class="grid-item"><a href="/jobs">Search for new job ads</a></div>
+      <div class="grid-item"><button>Refresh API</button></div>
+      <div class="grid-item"><button>View Jobs Saved</button></div>
+      <div class="grid-item"><button>View Jobs Not Saved</button></div>
+      <div class="grid-item"><button>View Appled Jobs</button></div>
+      <div class="grid-item"><button>Search for new jobs</button></div>
+    </div>
 
-        <center><a href="/users/logout">Logout</a></center>
-    </body>
+    <center><a href="/users/logout">Logout</a></center>
+  </body>
 </html>
