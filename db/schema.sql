@@ -30,14 +30,14 @@ VALUES
 CREATE TABLE jobs
 (
     id SERIAL PRIMARY KEY NOT NULL,
-    api_id VARCHAR(100) NOT NULL,
-    type VARCHAR(100) NOT NULL,
-    url VARCHAR(100) NOT NULL,
-    created_at VARCHAR(50) NOT NULL,
-    company VARCHAR(100) NOT NULL,
-    company_url VARCHAR(100),
-    location VARCHAR(100) NOT NULL,
-    title VARCHAR(100) NOT NULL,
+    api_id VARCHAR(1000) NOT NULL,
+    type VARCHAR(1000) NOT NULL,
+    url VARCHAR(1000) NOT NULL,
+    created_at VARCHAR(500) NOT NULL,
+    company VARCHAR(1000) NOT NULL,
+    company_url VARCHAR(1000),
+    location VARCHAR(1000) NOT NULL,
+    title VARCHAR(1000) NOT NULL,
     description VARCHAR(50000) NOT NULL,
     how_to_apply VARCHAR(3000) NOT NULL,
     company_logo VARCHAR(3000)
