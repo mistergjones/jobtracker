@@ -15,9 +15,11 @@ const flash = require("express-flash");
 
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
+initializePassport(passport);
 
 const axios = require("axios");
-initializePassport(passport);
+
+const db = require("./queries");
 
 // required for fetching data via browser for api
 var fetch = require("node-fetch");
@@ -165,7 +167,7 @@ app.get("/jobs", async (req, res) => {
 
     // just initialise it to one - it will break once the results = 0
     let resultCount = 1,
-        onPage = 0; // used for each apge that will have 50 results each
+        onPage = 0; // used for each page that will have 50 results each
 
     // hold all results of jobs in an array
     const allJobs = [];
@@ -178,14 +180,16 @@ app.get("/jobs", async (req, res) => {
         const jobs = await res.json();
         // create a flat array with a spread operator.
         allJobs.push(...jobs);
+        // capture how many results appear on that appage
         resultCount = jobs.length;
         console.log("got", resultCount, "jobs");
         onPage++;
     }
     console.log("Obtained: ", allJobs.length, "jobs total");
-    console.log(allJobs);
+    // console.log(allJobs);
     // const response = await axios.get("https://jobs.github.com/positions.json");
     // const listings = response.data;
+    // assign allJobs to listings...
     const listings = allJobs;
     listings.forEach((listing) => {
         console.log(listing.id);
@@ -220,6 +224,23 @@ app.get("/jobs", async (req, res) => {
     // await res.send(allJobs[0]);
     // res.send(response.data[0]);
 });
+
+app.get("/viewjobs", (req, res) => {
+    var getAllJobs = null;
+    // console.log(getAllJobs);
+
+    pool.query("SELECT * FROM jobs ORDER BY id ASC", (error, results) => {
+        if (error) {
+            throw error;
+        }
+        getAllJobs = results.rows;
+
+        res.render("show", {
+            getAllJobs: getAllJobs,
+        });
+    });
+});
+// app.get("/viewjobs", db.getAllJobs);
 
 // check if user is authenticated user
 function checkAuthenticated(req, res, next) {
