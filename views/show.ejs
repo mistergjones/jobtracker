@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Show all jobs</title>
+        <link rel="stylesheet" href="/css/styles.css" />
+    </head>
+    <body>
+        <div class="grid-container">
+            <% if(getAllJobs.length){ for(var i = 0;i < getAllJobs.length;i++) {
+            %> <% console.log(getAllJobs)%>
+            <div class="item1"><%=getAllJobs[i].api_id%></div>
+            <div class="item2"><%=getAllJobs[i].type%></div>
+            <div class="item3"><%=getAllJobs[i].title%></div>
+            <% }} %>
+        </div>
+    </body>
+</html>
