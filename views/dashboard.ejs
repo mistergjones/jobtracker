@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -31,22 +31,23 @@
             }
         </style>
     </head>
-    <body>
-        <h1>
-            <!-- make the first letter of the firstname uppercase -->
-            Welcome <%= user.charAt(0).toUpperCase()+ user.slice(1)%> to the
-            DASHBOARD
-        </h1>
+    <body> -->
+<%- include('header')%>
+<h1>
+    <!-- make the first letter of the firstname uppercase -->
+    Welcome <%= user.charAt(0).toUpperCase()+ user.slice(1)%> to the
+    DASHBOARD
+</h1>
 
-        <div class="grid-container">
-            <div class="grid-item"><a href="/viewjobs">View all jobs</a></div>
-            <div class="grid-item"><a href="/jobs">Refresh API</a></div>
-            <div class="grid-item"><button>View Jobs Saved</button></div>
-            <div class="grid-item"><button>View Jobs Not Saved</button></div>
-            <div class="grid-item"><button>View Appled Jobs</button></div>
-            <div class="grid-item"><button>Search for new jobs</button></div>
-        </div>
+<div class="grid-container">
+    <div class="grid-item"><a href="/viewjobs">View all jobs</a></div>
+    <div class="grid-item"><a href="/jobs">Refresh API</a></div>
+    <div class="grid-item"><button>View Jobs Saved</button></div>
+    <div class="grid-item"><button>View Jobs Not Saved</button></div>
+    <div class="grid-item"><button>View Appled Jobs</button></div>
+    <div class="grid-item"><button>Search for new jobs</button></div>
+</div>
 
-        <center><a href="/users/logout">Logout</a></center>
-    </body>
-</html>
+<center><a href="/users/logout">Logout</a></center>
+
+<%- include('footer')%>

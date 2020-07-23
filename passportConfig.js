@@ -2,7 +2,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { pool } = require("./dbConfig");
 var FacebookStrategy = require("passport-facebook").Strategy;
 const bcrypt = require("bcrypt");
-const configAuth = require("./congfig/auth.js");
+const configAuth = require("./config/auth.js");
 function initialize(passport) {
   console.log("Passport is initialized");
 

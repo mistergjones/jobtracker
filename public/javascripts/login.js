@@ -11,15 +11,15 @@ togglePasswordButton.addEventListener("click", togglePassword);
 function togglePassword() {
   if (password.type === "password") {
     password.type = "text";
-    togglePasswordButton.textContent = "Hide password";
+    togglePasswordButton.innerHTML = "<i class='fa fa-eye-slash'></i>";
     togglePasswordButton.setAttribute("aria-label", "Hide password.");
   } else {
     password.type = "password";
-    togglePasswordButton.textContent = "Show password";
+    togglePasswordButton.innerHTML = "<i class='fa fa-eye'></i>";
     togglePasswordButton.setAttribute(
       "aria-label",
       "Show password as plain text. " +
-        "Warning: this will display your password on the screen."
+      "Warning: this will display your password on the screen."
     );
   }
 }

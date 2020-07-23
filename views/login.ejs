@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-    />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>Job Tracker - Login</title>
-  </head>
-  <body>
-    <div id="login-box">
-      <div class="left">
-        <h1>Login</h1>
-        <label class="error"></label>
-        <ul>
-          <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => {
+<%- include('header')%>
+<div id="login-box">
+  <div class="left">
+    <h1>Login</h1>
+    <label class="error"></label>
+    <ul>
+      <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => {
           %>
-          <li><%= error.message %></li>
-          <% }) %> <% } %>
-        </ul>
+      <li><%= error.message %></li>
+      <% }) %> <% } %>
+    </ul>
 
-        <ul>
-          <% if(messages.success_msg) { %>
-          <li><%= messages.success_msg%></li>
-          <%}%>
+    <ul>
+      <% if(messages.success_msg) { %>
+      <li><%= messages.success_msg%></li>
+      <%}%>
         </ul>
 
         <ul>
           <!-- passport will store any messages in this messages object here in the session -->
           <% if(messages.error) { %>
-          <li>
-            <%=messages.error%>
-          </li>
-          <%}%>
+      <li>
+        <%=messages.error%>
+      </li>
+      <%}%>
         </ul>
 
         <form action="/users/login" method="POST" id="login-form">
@@ -66,7 +54,7 @@
               type="button"
               aria-label="Show password as plain text. Warning: this will display your password on the screen."
             >
-              Show password
+            <i class="fa fa-eye"></i>
             </button>
           </div>
 
@@ -81,5 +69,4 @@
       <div class="right"></div>
     </div>
     <script src="/javascripts/login.js"></script>
-  </body>
-</html>
+    <%- include('footer')%>
