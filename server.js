@@ -137,8 +137,8 @@ app.post("/users/register", async (req, res) => {
           res.render("register", { errors });
         } else {
           pool.query(
-            `INSERT INTO users(firstname, lastname, email, password)
-                        VALUES($1, $2, $3, $4)
+            `INSERT INTO users (firstname, lastname, email, password)
+                        VALUES ($1,$2,$3,$4)
                         RETURNING id, password`,
             [firstname, lastname, email, hashedPassword],
             (err, results) => {
@@ -192,59 +192,64 @@ app.get("/jobs", async (req, res) => {
     onPage++;
   }
   console.log("Obtained: ", allJobs.length, "jobs total");
-  // console.log(allJobs);
+  console.log(allJobs);
   // const response = await axios.get("https://jobs.github.com/positions.json");
   // const listings = response.data;
-  // assign allJobs to listings...
   const listings = allJobs;
-  listings.forEach((listing) => {
-    console.log(listing.id);
-    pool.query(
-      `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
-                VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-      [
-        listing.id,
-        listing.type,
-        listing.url,
-        listing.created_at,
-        listing.company,
-        listing.company_url,
-        listing.location,
-        listing.title,
-        listing.description,
-        listing.how_to_apply,
-        listing.company_logo,
-      ],
-      (err, results) => {
-        if (err) {
-          throw err;
-        }
-        // console.log(results.rows);
-        // // pass a flash message to our redirect page
-        // req.flash("success_msg", "You are now registered. Please log in");
-        // res.redirect("/users/login");
+  let newListings = allJobs;
+  // Get jobs from database
+  pool.query(
+    `select * from jobs`,
+    (err, results) => {
+      if (err) {
+        console.log("error =", err);
       }
-    );
-  });
+      results.rows.forEach(row => {
+        console.log("row =", row.api_id);
+        for (let index = 0; index < newListings.length; index++) {
+          if (newListings[index].id === row.api_id) {
+            console.log("spliced = ", newListings[index].id);
+            newListings.splice(index, 1);
+            break;
+          }
+        }
+      });
+
+      newListings.forEach((listing) => {
+        console.log(listing.id);
+        pool.query(
+          `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+                      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+          [
+            listing.id,
+            listing.type,
+            listing.url,
+            listing.created_at,
+            listing.company,
+            listing.company_url,
+            listing.location,
+            listing.title,
+            listing.description,
+            listing.how_to_apply,
+            listing.company_logo,
+          ],
+          (err, results) => {
+            if (err) {
+              throw err;
+            }
+            // console.log(results.rows);
+            // // pass a flash message to our redirect page
+            // req.flash("success_msg", "You are now registered. Please log in");
+            // res.redirect("/users/login");
+          }
+        );
+      });
+    }
+  )
+
   await res.redirect("/users/dashboard");
   // await res.send(allJobs[0]);
   // res.send(response.data[0]);
-});
-
-app.get("/viewjobs", (req, res) => {
-  var getAllJobs = null;
-  // console.log(getAllJobs);
-
-  pool.query("SELECT * FROM jobs ORDER BY id ASC", (error, results) => {
-    if (error) {
-      throw error;
-    }
-    getAllJobs = results.rows;
-
-    res.render("show", {
-      getAllJobs: getAllJobs,
-    });
-  });
 });
 // app.get("/viewjobs", db.getAllJobs);
 
