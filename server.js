@@ -251,6 +251,23 @@ app.get("/jobs", async (req, res) => {
   // await res.send(allJobs[0]);
   // res.send(response.data[0]);
 });
+
+app.get("/viewjobs", (req, res) => {
+  var getAllJobs = null;
+  // console.log(getAllJobs);
+
+  pool.query("SELECT * FROM jobs ORDER BY id ASC", (error, results) => {
+    if (error) {
+      throw error;
+    }
+    getAllJobs = results.rows;
+
+    res.render("show", {
+      getAllJobs: getAllJobs,
+      title: "Jobs Page"
+    });
+  });
+});
 // app.get("/viewjobs", db.getAllJobs);
 
 // check if user is authenticated user

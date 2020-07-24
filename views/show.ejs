@@ -1,19 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Show all jobs</title>
-        <link rel="stylesheet" href="/css/styles.css" />
-    </head>
-    <body>
-        <div class="grid-container">
-            <% if(getAllJobs.length){ for(var i = 0;i < getAllJobs.length;i++) {
-            %> <% console.log(getAllJobs)%>
-            <div class="item1"><%=getAllJobs[i].api_id%></div>
-            <div class="item2"><%=getAllJobs[i].type%></div>
-            <div class="item3"><%=getAllJobs[i].title%></div>
-            <% }} %>
+<%- include('header')%>
+<div class="grid-container">
+    <% if(getAllJobs.length){ for(var i = 0;i < getAllJobs.length;i++) {
+            %>
+    <div class="item2"><%=getAllJobs[i].type%></div>
+    <div class="item3"><%=getAllJobs[i].title%></div>
+    <div class="item1">
+
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">View Job
+            Description</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div stylyt="background-image: url(<%-`{getAllJobs[i].company_logo}`%>);" class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <%=`${getAllJobs[i].company}, ${getAllJobs[i].location} - ${getAllJobs[i].title} (${getAllJobs[i].type})  `%>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><%-`${getAllJobs[i].description}  `%></p>
+                        <p>
+                            How To Apply: <%-getAllJobs[i].how_to_apply%>
+                            Company URL: <a href="<%=getAllJobs[i].company_url%>"><%=getAllJobs[i].company_url%></a>
+                            <!-- <img src="<%-getAllJobs[i].company_logo%>" alt=""> -->
+
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
-</html>
+    </div>
+    <%}}%>
+</div>
+<%- include('footer')%>
