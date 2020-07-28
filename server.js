@@ -62,7 +62,6 @@ app.get("/about", (req, res) => {
   res.render("about", { title: "About Us Page" });
 });
 app.get("/users/register", checkAuthenticated, (req, res) => {
-
   res.render("register", { title: "Register Page" });
 });
 
@@ -71,7 +70,10 @@ app.get("/users/login", checkAuthenticated, (req, res) => {
 });
 
 app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
-  res.render("dashboard", { user: req.user.firstname, title: "Dashboard Page" });
+  res.render("dashboard", {
+    user: req.user.firstname,
+    title: "Dashboard Page",
+  });
 });
 
 //logout route
@@ -81,10 +83,34 @@ app.get("/users/logout", (req, res) => {
   res.redirect("/users/login");
 });
 
+//save jobs by user
+app.get("/saveJob/:app_id", (req, res) => {
+  if (req.sessionID && req.user.id) {
+    let api_id = req.params.app_id;
+    let user_id = req.user.id;
+    console.log({ api_id }, { user_id });
+    //saving to database
+    // pool.query(
+    //   `INSERT INTO save_job (api_id, user_id)
+    //               VALUES ($1,$2)`,
+    //   [api_id, user_id],
+    //   (err, results) => {
+    //     if (err) {
+    //       throw err;
+    //     }});
+    req.flash("success_msg", "You have saved the job");
+    res.redirect("/viewjobs");
+  } else {
+    req.flash("success_msg", "You must logged-in first");
+    res.redirect("/users/login");
+  }
+  // console.log({ req });
+});
+
 // using asynchronous
 app.post("/users/register", async (req, res) => {
   console.log(req);
-  // get variables from teh form
+  // get variables from the form
   let { firstname, lastname, email, password, password2 } = req.body;
 
   console.log(firstname, lastname, email, password, password2);
@@ -147,10 +173,7 @@ app.post("/users/register", async (req, res) => {
               }
               console.log(results.rows);
               // pass a flash message to our redirect page
-              req.flash(
-                "success_msg",
-                "You are now registered. Please log in"
-              );
+              req.flash("success_msg", "You are now registered. Please log in");
               res.redirect("/users/login");
             }
           );
@@ -198,54 +221,51 @@ app.get("/jobs", async (req, res) => {
   const listings = allJobs;
   let newListings = allJobs;
   // Get jobs from database
-  pool.query(
-    `select * from jobs`,
-    (err, results) => {
-      if (err) {
-        console.log("error =", err);
-      }
-      results.rows.forEach(row => {
-        console.log("row =", row.api_id);
-        for (let index = 0; index < newListings.length; index++) {
-          if (newListings[index].id === row.api_id) {
-            console.log("spliced = ", newListings[index].id);
-            newListings.splice(index, 1);
-            break;
-          }
-        }
-      });
-
-      newListings.forEach((listing) => {
-        console.log(listing.id);
-        pool.query(
-          `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
-                      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-          [
-            listing.id,
-            listing.type,
-            listing.url,
-            listing.created_at,
-            listing.company,
-            listing.company_url,
-            listing.location,
-            listing.title,
-            listing.description,
-            listing.how_to_apply,
-            listing.company_logo,
-          ],
-          (err, results) => {
-            if (err) {
-              throw err;
-            }
-            // console.log(results.rows);
-            // // pass a flash message to our redirect page
-            // req.flash("success_msg", "You are now registered. Please log in");
-            // res.redirect("/users/login");
-          }
-        );
-      });
+  pool.query(`select * from jobs`, (err, results) => {
+    if (err) {
+      console.log("error =", err);
     }
-  )
+    results.rows.forEach((row) => {
+      console.log("row =", row.api_id);
+      for (let index = 0; index < newListings.length; index++) {
+        if (newListings[index].id === row.api_id) {
+          console.log("spliced = ", newListings[index].id);
+          newListings.splice(index, 1);
+          break;
+        }
+      }
+    });
+
+    newListings.forEach((listing) => {
+      console.log(listing.id);
+      pool.query(
+        `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+                      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+        [
+          listing.id,
+          listing.type,
+          listing.url,
+          listing.created_at,
+          listing.company,
+          listing.company_url,
+          listing.location,
+          listing.title,
+          listing.description,
+          listing.how_to_apply,
+          listing.company_logo,
+        ],
+        (err, results) => {
+          if (err) {
+            throw err;
+          }
+          // console.log(results.rows);
+          // // pass a flash message to our redirect page
+          // req.flash("success_msg", "You are now registered. Please log in");
+          // res.redirect("/users/login");
+        }
+      );
+    });
+  });
 
   await res.redirect("/users/dashboard");
   // await res.send(allJobs[0]);
@@ -264,7 +284,7 @@ app.get("/viewjobs", (req, res) => {
 
     res.render("show", {
       getAllJobs: getAllJobs,
-      title: "Jobs Page"
+      title: "Jobs Page",
     });
   });
 });
