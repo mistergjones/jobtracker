@@ -22,10 +22,10 @@ CREATE TABLE users
     UNIQUE (email)
 );
 
-INSERT INTO users
-    (firstname, lastname, email, password)
-VALUES
-    ('glen', 'jones', 'gj@gj.com', 'password');
+INSERT INTO users (firstname, lastname, email, password) VALUES ('glen', 'jones', 'gj@gj.com', 'password');
+INSERT INTO users (firstname, lastname, email, password) VALUES ('ben', 'jones', 'bj@bj.com', 'password');
+INSERT INTO users (firstname, lastname, email, password) VALUES ('ken', 'jones', 'kj@kj.com', 'password');
+INSERT INTO users (firstname, lastname, email, password) VALUES ('mr', 'jones', 'mr@mr.com', 'password');
 
 CREATE TABLE jobs
 (
@@ -46,8 +46,56 @@ CREATE TABLE jobs
 INSERT INTO jobs
     (api_id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
 VALUES
-    ('cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Full Time', 'https://jobs.github.com/positions/cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Thu Jul 16 02:02:01 UTC 2020', 'Koffie Labs', 'https://www.getkoffie.com/', 'NYC/Remote', 'Junior Data Engineer', '<p>Koffie is an insurance company purpose built for the autonomous vehicle era. We are taking transportation insurance out of the dark ages by using modern technology to deliver instant policies based on advanced safety and autonomous technology. As an InsurTech, Koffie is free from legacy systems and inefficient processes, our AI-driven predictive models deliver a reimagined insurance experience for fleets.</p>\n<p>We believe strongly in diversity of thought which comes from different backgrounds and experiences and want to hear from you, regardless of where you live. Koffie is a work from home first company but believes face time every few weeks is essential.</p>\n<p>Our vision is to align incentives across fleets, technology providers, brokers and the automotive industry. By catalyzing the adoption of safety technology, we positively impact road safety and facilitate a more efficient supply chain. Were backed by top-tier VCs in the fintech and mobility sectors. If youre ready to work obsessively with us to make insurance better, faster, more efficient and build products for the next 100 years of mobility, we want to hear from you.</p>\n<p>Description\nThis is a unique role that offers broad exposure to software engineering and data science. We are eager to find underrepresented candidates who are early in their career and dont want to choose between engineering or data science.</p>\n<p>Working with data science and engineering, you will be deeply enmeshed in the critical nuances of disambiguation, normalization, standardization and other ETL skills. You will also have the opportunity to work in all stages of our software process from researching data sources to developing data pipelines and building business intelligence visualization tools.</p>\n<p>Responsibilities</p>\n<p>Design and build data pipelines\nRun and iterate data science experiments in the cloud and in a production environment\nSupport business intelligence and data science needs via visualization/reporting</p>\n<p>Background/Experience</p>\n<p>-Undergraduate CS degree or equivalent; 2-5 years professional experience\n-Experience with python; the ideal candidate is generally comfortable with web programming, consuming APIs, data wrangling, etc.\n-ETL processes on large open/public (&gt;50 GB) datasets a plus\n-Designing systems that store/query geospatial and time series data\n-Familiarity with python data engineering, data science, and visualization frameworks\n-Good understanding of classification and regression metrics\n-Curiosity for insurance and autonomous technology applied to transportation/trucking\n-Entrepreneurial mindset and comfort with ambiguity</p>\n<p>Benefits\nFor US employees we offer a competitive salary, stock options, unlimited vacation, 100% employer paid health, vision and dental plans, commuter benefits and discounted fitness classes, generous WFH stipend, personal learning/training (for professional/industry certification) and conference budget. For remote hires outside the US, we are unable to provide employer paid health, vision and dental plans, commuter benefits and discounted fitness classes.</p>\n<p>We believe strongly in diversity of thought which comes from different backgrounds and experiences. Covid has helped us transform to a WFH-first company, so periodic multi-day get-togethers are an essential part of growing our team.</p>\n', '<p><a href=\"https://apply.workable.com/j/A4566CE638\">https://apply.workable.com/j/A4566CE638</a></p>\n', 'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaVdHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e4bccde8a00566a0961a533bbed67c6026714783/koffie%20logo%20black.jpg');
+    ('100', 'Full Time', 'https://jobs.github.com/positions/cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Thu Jul 16 02:02:01 UTC 2020', 'IBM', 'https://www.getkoffie.com/', 'NYC/Remote', 'Junior Data Engineer', '<p>IBM is an </p>\n', 'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaVdHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e4bccde8a00566a0961a533bbed67c6026714783/koffie%20logo%20black.jpg','');
+
+INSERT INTO jobs
+    (api_id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+VALUES
+    ('200', 'Part Time', 'https://jobs.github.com/positions/cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Thu Jul 16 02:02:01 UTC 2020', 'Telstra', 'https://www.getkoffie.com/', 'NYC/Remote', 'Junior Data Engineer', '<p>Telstra is an </p>\n', 'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaVdHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e4bccde8a00566a0961a533bbed67c6026714783/koffie%20logo%20black.jpg','');
+INSERT INTO jobs
+    (api_id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+VALUES
+        ('300', 'Half Time', 'https://jobs.github.com/positions/cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Thu Jul 16 02:02:01 UTC 2020', 'Facebook', 'https://www.getkoffie.com/', 'NYC/Remote', 'Junior Data Engineer', '<p>Facebook is an </p>\n', 'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaVdHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e4bccde8a00566a0961a533bbed67c6026714783/koffie%20logo%20black.jpg','');
+INSERT INTO jobs
+    (api_id, type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
+VALUES
+        ('400', 'Quarter Time', 'https://jobs.github.com/positions/cc20d9f2-0102-4785-8253-66093d3ca5c0', 'Thu Jul 16 02:02:01 UTC 2020', 'Google', 'https://www.getkoffie.com/', 'NYC/Remote', 'Junior Data Engineer', '<p>Google is an </p>\n', 'https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaVdHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e4bccde8a00566a0961a533bbed67c6026714783/koffie%20logo%20black.jpg','');
 
 
 
+
+create table userToJobs (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id NUMERIC(4) NOT NULL,
+    api_id VARCHAR(50) NOT NULL
+    );
+
+INSERT INTO userToJobs (user_id,api_id) values (6,'100');
+INSERT INTO userToJobs (user_id,api_id) values (6,'300');
+INSERT INTO userToJobs (user_id,api_id) values (9,'200');
+
+-- Perhaps we need to implement a boolean column in users to denote if they have saved a job or not...(T/F). If a user goes to a saved jobs screen..if (F) - show no jobs saved ELSE (t) show jobs;
+-- Perhaps we need to implement a column in userToJobs to capture a message that "job no longer available"
+-- Perhaps we need an SQL Delete statement that when a user sees the above, they hit "remove", and hte SQL removes it from userToJobs table
+
+-- the below is a query that determines which job has not been saved in a userToJobs table
+select t1.api_id from jobs t1 LEFT JOIN userToJobs t2 ON t2.api_id = t1.api_id WHERE t2.api_id IS NULL;
+
+-- algorithm
+-- 1. load the data api in as per usual in the normal table
+-- 2. keep track of the user id in the session....this is valuable (params???)
+-- 3. When a user hits "save"...the following needs to occur:
+    -- a. take the user id and the API_ID and insert it into the table (userToJobs)
+        -- i. NOTE: we have another screen/route that will run a simple SELECT query to only show their saved jobs (NOTE: need to track their USER_ID for this)
+        -- ii. the user just continues where they are and adds jobs.
+        -- iii. perhaps update the "saved_job_status === true)
+
+-- 4. The next time a refresh occurs: 
+    -- a. IF the API_ID only exists in the JOBS table (i.e. it is not in the latest batch) && NOT IN the table 'usersToJobs', we can simply delete the records (the above query identifies this). 
+    
+-- 5. The next time a refresh occurs: (a user HAS saved a job)
+    -- a. IF the API_ID only exists in the JOBS table (i.e. it is not in the latest batch) && API_ID exists in USERTOJOBS table... 
+        -- i. delete record from JOBS table.
+        -- ii. update status in USERTOJOBS to "Job no longer available". 
+        -- NOTE: So when a user looks at this job, they can then delete this from their screen.
 

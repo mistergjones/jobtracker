@@ -1,58 +1,70 @@
 <%- include('header')%>
 <div id="login-box">
-  <div class="left">
-    <h1>Registration Page</h1>
+    <div class="left">
+        <h1>Registration Page</h1>
 
-    <!-- display the error message here upon clicking the REGISTER button -->
-    <label class="error"></label>
-    <ul>
-      <% if(typeof errors != 'undefined') { %> <% errors.forEach(error => {
-          %>
-      <li><%=error.message%></li>
-      <% }) %> <% } %>
-    </ul>
+        <!-- display the error message here upon clicking the REGISTER button -->
+        <label class="error"></label>
+        <ul>
+            <% if(typeof errors != 'undefined') { %> <% errors.forEach(error =>
+            { %>
+            <li><%=error.message%></li>
+            <% }) %> <% } %>
+        </ul>
 
-    <form>
-      <div class="input-container">
-        <input type="text" name="firstname" id="firstname" required />
-        <label for="firstname">First Name</label>
-      </div>
+        <form>
+            <div class="input-container">
+                <input type="text" name="firstname" id="firstname" required />
+                <label for="firstname">First Name</label>
+            </div>
 
-      <div class="input-container">
-        <input type="text" name="lastname" id="lastname" required />
-        <label for="lastname">Last Name</label>
-      </div>
+            <div class="input-container">
+                <input type="text" name="lastname" id="lastname" required />
+                <label for="lastname">Last Name</label>
+            </div>
 
-      <div class="input-container">
-        <input type="text" name="email" id="email" required />
-        <label for="email">Email</label>
-      </div>
+            <div class="input-container">
+                <input type="text" name="email" id="email" required />
+                <label for="email">Email</label>
+            </div>
 
-      <div class="input-container">
-        <input type="password" name="password" id="password" required />
-        <label for="password">Password</label>
-      </div>
-      <div class="input-container">
-        <input type="password" name="password2" id="password2" required />
-        <label for="password2">Confirm Password</label>
-      </div>
+            <div class="input-container">
+                <input type="password" name="password" id="password" required />
+                <label for="password">Password</label>
+            </div>
+            <div class="input-container">
+                <input
+                    type="password"
+                    name="password2"
+                    id="password2"
+                    required
+                />
+                <label for="password2">Confirm Password</label>
+            </div>
 
-      <div class="btn-submit">
-        <input type="submit" value="Register" id="signup-submit-button" />
-      </div>
-      <div>
-        <a href="/users/login">Already Registered? Login here</a>
-      </div>
-    </form>
-  </div>
-  <div class="right">
-    <span class="loginwith">Sign in with<br />social network</span>
+            <div class="btn-submit">
+                <input
+                    type="submit"
+                    value="Register"
+                    id="signup-submit-button"
+                />
+            </div>
+            <div>
+                <a href="/users/login">Already Registered? Login here</a>
+            </div>
+        </form>
+    </div>
+    <div class="right">
+        <span class="loginwith">Sign in with<br />social network</span>
 
-    <a href="/auth/facebook" class="social-signin facebook">Log in with facebook</a>
-    <button class="social-signin twitter">Log in with Twitter</button>
-    <button class="social-signin google">Log in with Google+</button>
-  </div>
-  <div class="or">OR</div>
+        <a href="/auth/facebook" class="social-signin facebook"
+            >Log in with facebook</a
+        >
+        <button class="social-signin twitter">Log in with Twitter</button>
+        <button class="social-signin google">Log in with Google+</button>
+    </div>
+    <div class="or">OR</div>
 </div>
-<script src="/javascripts/register.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="/javascripts/register.js" type="module"></script>
 <%- include('footer')%>
