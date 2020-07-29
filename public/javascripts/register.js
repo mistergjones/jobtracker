@@ -109,7 +109,7 @@ const handleSubmit = (e) => {
       password2: confirmPasswordInput.textContent,
     };
     console.log("validation passed = ", params);
-    url = "http://localhost:4000/users/register";
+    url = "/users/register";
     axios.post(url, params).then((res) => {
       console.log(res);
       document.body.innerHTML = res.data;
