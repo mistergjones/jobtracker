@@ -252,3 +252,20 @@ h1 {
   font-size: 30px;
   text-align: center;
 }
+
+#applied-jobs-wrapper {
+  position: relative;
+  margin: 25px 50px;
+}
+
+#applied-jobs {
+  width: 100%;
+  height: 100%;
+}
+tr{
+  padding: 0;
+}
+/* .view-job-grid-container > div {
+  border: 1px solid #2296f3;
+  padding: 20px;
+} */

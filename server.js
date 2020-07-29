@@ -2,7 +2,7 @@ const express = require("express");
 
 // establsh app
 const app = express();
-
+const methodOverride = require('method-override')
 // create const pool based on the .dbConfig
 const { pool } = require("./dbConfig");
 // create bcrypt
@@ -47,6 +47,14 @@ app.use(
 // set
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 // we will use this for flash messages
 app.use(flash());
@@ -107,6 +115,72 @@ app.get("/saveJob/:app_id", (req, res) => {
   // console.log({ req });
 });
 
+//view applied jobs
+app.get("/appliedJobs", (req, res) => {
+  if (req.user.id) {
+    var getAllJobs = null;
+    // console.log(getAllJobs);
+
+    pool.query("SELECT * FROM jobs ORDER BY id ASC", (error, results) => {
+      if (error) {
+        throw error;
+      }
+      getAllJobs = results.rows;
+      res.render("appliedJobs/show.ejs", {
+        getAllJobs: getAllJobs,
+        title: "View Applied Jobs",
+      });
+    });
+  } else {
+    req.flash("success_msg", "You must logged-in first");
+    res.redirect("/users/login");
+  }
+});
+
+//view applied jobs
+app.get("/appliedJobs/:api_id", (req, res) => {
+  if (req.user.id) {
+    var getJob = null;
+    // console.log(getAllJobs);
+    var api_id = req.params.api_id
+
+    pool.query(`SELECT * FROM jobs WHERE api_id='${api_id}';`, (error, results) => {
+      if (error) {
+        throw error;
+      }
+      getJob = results.rows[0];
+      res.render("appliedJobs/edit.ejs", {
+        getJob: getJob,
+        title: "Edit Applied Job",
+      });
+    });
+  } else {
+    req.flash("success_msg", "You must logged-in first");
+    res.redirect("/users/login");
+  }
+});
+//update applied job information
+app.put("/appliedJobs/:api_id", (req, res) => {
+  console.log("reached to update route");
+  if (req.user.id) {
+    var getJob = null;
+    var api_id = req.params.api_id
+    console.log(api_id);
+    //change the sql to update
+    // pool.query(`SELECT * FROM jobs WHERE api_id='${api_id}';`, (error, results) => {
+    //   if (error) {
+    //     throw error;
+    //   }
+    //   getJob = results.rows[0];
+    req.flash("success_msg", "Edited successfully");
+    res.redirect("/appliedJobs");
+    //});
+    // });
+  } else {
+    req.flash("success_msg", "You must logged-in first");
+    res.redirect("/users/login");
+  }
+});
 // using asynchronous
 app.post("/users/register", async (req, res) => {
   console.log(req);

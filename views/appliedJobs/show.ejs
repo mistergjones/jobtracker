@@ -1,0 +1,58 @@
+<%- include('../header.ejs')%>
+<div id="applied-jobs-wrapper">
+  <table id="applied-jobs" class="table table-striped table-bordered" style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Job ID</th>
+        <th>Company Name</th>
+        <th>Role</th>
+        <th>Contact Person</th>
+        <th>Date of Application</th>
+        <th>Follow-up Date</th>
+        <th>Interview Date</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% if(getAllJobs.length){ for(var i = 0;i < getAllJobs.length;i++) { %>
+        <td><%=getAllJobs[i].id%></td>
+        <td><%=getAllJobs[i].company%></td>
+        <td><%=getAllJobs[i].title%></td>
+        <td>Contact Person</td>
+        <td>Date of Application</td>
+        <td>Follow-up Date</td>
+        <td>Interview Date</td>
+        <td>Remarks</td>
+        <td><a href="/appliedJobs/<%=getAllJobs[i].api_id%>" class="btn btn-warning">Edit</a></td>
+        <td><a href="#" class="btn btn-danger">Delete</a></td>
+      </tr>
+      <%}}%>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Job ID</th>
+        <th>Company Name</th>
+        <th>Role</th>
+        <th>Contact Person</th>
+        <th>Date of Application</th>
+        <th>Follow-up Date</th>
+        <th>Interview Date</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<script>
+  // Basic example
+  $(document).ready(function () {
+    $("#applied-jobs").DataTable({
+      pagingType: "full_numbers",
+    });
+  });
+</script>
+<%- include('../footer.ejs')%>
