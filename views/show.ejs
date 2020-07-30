@@ -1,32 +1,21 @@
 <%- include('header')%>
 <div class="grid-container">
-    <div class="item2">Job Types</div>
-    <div class="item2">Role</div>
-    <div class="item2">Description</div>
+  <div class="item2">Job Types</div>
+  <div class="item2">Role</div>
+  <div class="item2">Description</div>
   <% if(getAllJobs.length){ for(var i = 0;i < getAllJobs.length;i++) { %>
   <div class="item2"><%=getAllJobs[i].type%></div>
   <div class="item3"><%=getAllJobs[i].title%></div>
   <div class="item1">
     <!-- Trigger the modal with a button -->
-    <button
-    
-      type="button"
-      class="btn btn-info btn-lg"
-      data-toggle="modal"
-      data-target="#myModal<%=i%>"
-      data-index=`1`
-      
-    >
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<%=i%>" data-index=`1`>
       View Job Description
     </button>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal<%=i%>" role="dialog">
       <div class="modal-dialog modal-lg">
-        <div
-          stylyt="background-image: url(<%-`{getAllJobs[i].company_logo}`%>);"
-          class="modal-content"
-        >
+        <div stylyt="background-image: url(<%-`{getAllJobs[i].company_logo}`%>);" class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">
               &times;
@@ -40,19 +29,13 @@
             <p><%-`${getAllJobs[i].description} `%></p>
             <p>
               How To Apply: <%-getAllJobs[i].how_to_apply%> Company URL:
-              <a href="<%=getAllJobs[i].company_url%>"
-                ><%=getAllJobs[i].company_url%></a
-              >
+              <a href="<%=getAllJobs[i].company_url%>"><%=getAllJobs[i].company_url%></a>
               <!-- <img src="<%-getAllJobs[i].company_logo%>" alt=""> -->
             </p>
           </div>
           <div class="modal-footer">
-            
-            <a
-              class="btn btn-success"
-              href="/saveJob/<%= getAllJobs[i].api_id %>"
-              />Save This Job</a
-            >
+
+            <a class="btn btn-success" href="/saveJob/<%= getAllJobs[i].api_id %>" />Save This Job</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">
               Close
             </button>
