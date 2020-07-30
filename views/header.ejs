@@ -21,9 +21,19 @@
         <li class="nav-link">
           <a href="/contact"><i class="fa fa-phone"></i>Contact Us</a>
         </li>
+        <% locals.user%>
+        <% if(!locals.user){%>
         <li class="nav-link">
           <a href="/users/login"><i class="fa fa-user"></i>Login</a>
         </li>
+        <%} else {%>
+        <li class="nav-link">
+          <a href="/users/dashboard"><i class="fa fa-tasks"></i>Dashboard</a>
+        </li>
+        <li class="nav-link">
+          <i class="fa fa-user"></i><a href="/users/logout">Logout</a>
+        </li>
+        <%}%>
       </ul>
     </nav>
   </div>
