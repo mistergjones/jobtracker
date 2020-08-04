@@ -51,6 +51,7 @@ app.use(
 // set
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -60,6 +61,11 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 
+//to send session information to ejs
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
 // we will use this for flash messages
 app.use(flash());
 
@@ -158,6 +164,7 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
 //update applied job information
 app.put("/appliedJobs/:api_id", (req, res) => {
     console.log("reached to update route");
+
     if (req.user.id) {
         var getJob = null;
         var api_id = req.params.api_id
@@ -172,6 +179,30 @@ app.put("/appliedJobs/:api_id", (req, res) => {
         res.redirect("/appliedJobs");
         //});
         // });
+    } else {
+        req.flash("success_msg", "You must logged-in first");
+        res.redirect("/users/login");
+    }
+});
+
+// delete applied jobs
+app.delete("/appliedJobs/delete/:api_id", (req, res) => {
+    console.log("reached to delete route");
+    if (req.user.id) {
+        var user_id = req.user.id;
+        var api_id = req.params.api_id
+        console.log(api_id);
+        //change the sql to update
+        pool.query(`DELETE FROM userToJobs WHERE api_id='${api_id}' and user_id=${user_id};`, (error, results) => {
+            if (error) {
+                throw error;
+            }
+            //   getJob = results.rows[0];
+            req.flash("success_msg", "Deleted successfully");
+            res.redirect("/appliedJobs");
+            //});
+            // });
+        });
     } else {
         req.flash("success_msg", "You must logged-in first");
         res.redirect("/users/login");
@@ -215,6 +246,7 @@ app.post("/users/register", async (req, res) => {
 
         // query the database to see if hte user exists already.
         // $1 will be replaced by the variable we will pass in....which is email
+<<<<<<< HEAD
 
         const results = await getUserByEmail(email);
         console.log("results after getUserByEmail", results);
@@ -232,6 +264,46 @@ app.post("/users/register", async (req, res) => {
             res.redirect("/users/login");
         }
 
+=======
+        pool.query(
+            `SELECT * FROM users
+              WHERE email = $1`,
+            [email],
+            (err, results) => {
+                if (err) {
+                    console.log(err);
+                }
+                // just print out if there is a duplicate of emails in the DB
+                console.log(results.rows);
+
+                // if tehre is a duplicate...
+                if (results.rows.length > 0) {
+                    errors.push({ message: "Email already registered" });
+                    // re render the register page
+                    res.render("register", { errors, title: "Register Page" });
+                } else {
+                    pool.query(
+                        `INSERT INTO users (firstname, lastname, email, password)
+                        VALUES ($1,$2,$3,$4)
+                        RETURNING id, password`,
+                        [firstname, lastname, email, hashedPassword],
+                        (err, results) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log(results.rows);
+                            // pass a flash message to our redirect page
+                            req.flash(
+                                "success_msg",
+                                "You are now registered. Please log in"
+                            );
+                            res.redirect("/users/login");
+                        }
+                    );
+                }
+            }
+        );
+>>>>>>> Delete button working on my job page
     }
 });
 

@@ -29,7 +29,13 @@
         <td></td>
         <td></td>
         <td><a href="/appliedJobs/<%=savedJobs[i].api_id%>" class="btn btn-warning">Edit</a></td>
-        <td><a href="#" class="btn btn-danger">Delete</a></td>
+        <td>
+          <form class="form-horizontal" action="/appliedJobs/delete/<%=savedJobs[i].api_id%>" method="POST">
+            <input name="_method" type="hidden" value="DELETE">
+            <button type="submit" onclick="return handleDeleteButton()"
+              class="btn btn-danger delete-btn">Delete</button>
+          </form>
+        </td>
       </tr>
       <%}}%>
     </tbody>
@@ -89,6 +95,14 @@
 </div>
 <%}}%>
 <script>
+  const handleDeleteButton = function myConfirm(event) {
+    var result = confirm("Confirm to delete?");
+    if (result == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   // Basic example
   $(document).ready(function () {
     $("#applied-jobs").DataTable({
