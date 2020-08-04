@@ -2,7 +2,7 @@ const express = require("express");
 
 // establsh app
 const app = express();
-const methodOverride = require('method-override')
+const methodOverride = require("method-override");
 // create const pool based on the .dbConfig
 const { pool } = require("./dbConfig");
 // create bcrypt
@@ -27,12 +27,18 @@ var fetch = require("node-fetch");
 // assign PORT 4000 in development mode
 const PORT = process.env.PORT || 4000;
 
-
 // Jobs module
-const { getSavedJobs, saveJobIdsForUserId, getJobs, saveJob, getJobById } = require("./models/jobs");
+const {
+    getSavedJobs,
+    saveJobIdsForUserId,
+    getJobs,
+    saveJob,
+    getJobById,
+} = require("./models/jobs");
 const { getUserByEmail, addUser } = require("./models/users");
 // middle ware
 app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 app.use(bodyParser());
 // This piece sends details from our frontend register to the server/
 app.use(express.urlencoded({ extended: false }));
@@ -51,15 +57,16 @@ app.use(
 // set
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(methodOverride(function (req, res) {
-    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-        // look in urlencoded POST bodies and delete it
-        var method = req.body._method
-        delete req.body._method
-        return method
-    }
-}))
+app.use(
+    methodOverride(function (req, res) {
+        if (req.body && typeof req.body === "object" && "_method" in req.body) {
+            // look in urlencoded POST bodies and delete it
+            var method = req.body._method;
+            delete req.body._method;
+            return method;
+        }
+    })
+);
 
 //to send session information to ejs
 app.use(function (req, res, next) {
@@ -120,22 +127,21 @@ app.get("/saveJob/:app_id", async (req, res) => {
     // console.log({ req });
 });
 
-
-
 //view applied jobs
 app.get("/appliedJobs", async (req, res) => {
     if (req.user.id) {
+        // console.log("ASDFSAFSAFADFDSAFDSAF");
+        // console.log(req.user.id);
         let savedJobs = [];
         try {
-
             savedJobs = await getSavedJobs(req.user.id);
+
             res.render("appliedJobs/show.ejs", {
                 savedJobs,
                 title: "View Applied Jobs",
             });
         } catch (error) {
             console.log("error has occurred!", error);
-
         }
     } else {
         req.flash("success_msg", "You must logged-in first");
@@ -148,7 +154,7 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
     if (req.user.id) {
         var getJob = null;
         // console.log(getAllJobs);
-        var api_id = req.params.api_id
+        var api_id = req.params.api_id;
 
         const job = await getJobById(api_id);
         getJob = job.rows[0];
@@ -162,22 +168,37 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
     }
 });
 //update applied job information
-app.put("/appliedJobs/:api_id", (req, res) => {
+app.put("/appliedJobs/:api_id", async (req, res) => {
     console.log("reached to update route");
 
     if (req.user.id) {
         var getJob = null;
-        var api_id = req.params.api_id
-        console.log(api_id);
+        var api_id = req.params.api_id;
+        var contactPerson = req.body.contact_person;
+        var applicationDate = req.body.application_date;
+        var followUpDate = req.body.follow_up_date;
+        var interviewDate = req.body.interview_date;
+        var remarks = req.body.remarks;
+
         //change the sql to update
-        // pool.query(`SELECT * FROM jobs WHERE api_id='${api_id}';`, (error, results) => {
-        //   if (error) {
-        //     throw error;
-        //   }
-        //   getJob = results.rows[0];
-        req.flash("success_msg", "Edited successfully");
-        res.redirect("/appliedJobs");
-        //});
+
+        pool.query(
+            `UPDATE usertojobs SET 
+            contactperson = '${contactPerson}',  
+            dateofapplication = '${applicationDate}', 
+            followupdate = '${followUpDate}',
+            interviewdate = '${interviewDate}',
+            remarks = '${remarks}' 
+            WHERE api_id='${api_id}';`,
+            (error, results) => {
+                if (error) {
+                    throw error;
+                }
+                getJob = results.rows[0];
+                req.flash("success_msg", "Edited successfully");
+                res.redirect("/appliedJobs");
+            }
+        );
         // });
     } else {
         req.flash("success_msg", "You must logged-in first");
@@ -256,54 +277,11 @@ app.post("/users/register", async (req, res) => {
             res.render("register", { errors, title: "Register Page" });
         } else {
             await addUser(firstname, lastname, email, hashedPassword);
-            req.flash(
-                "success_msg",
-                "You are now registered. Please log in"
-            );
+            req.flash("success_msg", "You are now registered. Please log in");
 
             res.redirect("/users/login");
         }
 
-=======
-        pool.query(
-            `SELECT * FROM users
-              WHERE email = $1`,
-            [email],
-            (err, results) => {
-                if (err) {
-                    console.log(err);
-                }
-                // just print out if there is a duplicate of emails in the DB
-                console.log(results.rows);
-
-                // if tehre is a duplicate...
-                if (results.rows.length > 0) {
-                    errors.push({ message: "Email already registered" });
-                    // re render the register page
-                    res.render("register", { errors, title: "Register Page" });
-                } else {
-                    pool.query(
-                        `INSERT INTO users (firstname, lastname, email, password)
-                        VALUES ($1,$2,$3,$4)
-                        RETURNING id, password`,
-                        [firstname, lastname, email, hashedPassword],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            console.log(results.rows);
-                            // pass a flash message to our redirect page
-                            req.flash(
-                                "success_msg",
-                                "You are now registered. Please log in"
-                            );
-                            res.redirect("/users/login");
-                        }
-                    );
-                }
-            }
-        );
->>>>>>> Delete button working on my job page
     }
 });
 
@@ -317,7 +295,7 @@ app.post(
 );
 
 app.get("/jobs", async (req, res) => {
-    console.log("hello.")
+    console.log("hello.");
     const baseURL = "https://jobs.github.com/positions.json";
 
     // just initialise it to one - it will break once the results = 0
@@ -327,7 +305,9 @@ app.get("/jobs", async (req, res) => {
     // hold all results of jobs in an array
     const allJobs = [];
     let a = 0;
-    let clockInterval = setInterval(() => { a += 1 }, 1000)
+    let clockInterval = setInterval(() => {
+        a += 1;
+    }, 1000);
     console.log("clock = ", clockInterval);
     // fetch all pages
     while (resultCount === 50) {
@@ -370,7 +350,6 @@ app.get("/jobs", async (req, res) => {
     }
 
     res.redirect("/users/dashboard");
-
 });
 
 app.get("/viewjobs", async (req, res) => {
@@ -380,7 +359,6 @@ app.get("/viewjobs", async (req, res) => {
         getAllJobs: rows,
         title: "Jobs Page",
     });
-
 });
 // app.get("/viewjobs", db.getAllJobs);
 
