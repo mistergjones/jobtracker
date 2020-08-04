@@ -19,8 +19,8 @@ initializePassport(passport);
 
 const axios = require("axios");
 
-const db = require("../jobtracker/lib/queries");
-
+// const db = require("../jobtracker/lib/queries");
+const db = require("./lib/queries");
 // required for fetching data via browser for api
 var fetch = require("node-fetch");
 
