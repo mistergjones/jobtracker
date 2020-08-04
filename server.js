@@ -29,7 +29,8 @@ const PORT = process.env.PORT || 4000;
 
 
 // Jobs module
-const { getSavedJobs } = require("./models/jobs");
+const { getSavedJobs, saveJobIdsForUserId, getJobs, saveJob, getJobById } = require("./models/jobs");
+const { getUserByEmail, addUser } = require("./models/users");
 // middle ware
 app.set("view engine", "ejs");
 app.use(bodyParser());
@@ -95,7 +96,7 @@ app.get("/users/logout", (req, res) => {
 });
 
 //save jobs by user
-app.get("/saveJob/:app_id", (req, res) => {
+app.get("/saveJob/:app_id", async (req, res) => {
     if (req.sessionID) {
         // d&& req.user.id) {
         let api_id = req.params.app_id;
@@ -103,16 +104,7 @@ app.get("/saveJob/:app_id", (req, res) => {
 
         console.log({ api_id }, { user_id });
         //saving to database
-        pool.query(
-            `INSERT INTO usertojobs (api_id, user_id)
-                  VALUES ($1,$2)`,
-            [api_id, user_id],
-            (err, results) => {
-                if (err) {
-                    throw err;
-                }
-            }
-        );
+        await saveJobIdsForUserId(api_id, user_id);
         req.flash("success_msg", "You have saved the job");
         res.redirect("/viewjobs");
     } else {
@@ -146,21 +138,17 @@ app.get("/appliedJobs", async (req, res) => {
 });
 
 //view applied jobs
-app.get("/appliedJobs/:api_id", (req, res) => {
+app.get("/appliedJobs/:api_id", async (req, res) => {
     if (req.user.id) {
         var getJob = null;
         // console.log(getAllJobs);
         var api_id = req.params.api_id
 
-        pool.query(`SELECT * FROM jobs WHERE api_id='${api_id}';`, (error, results) => {
-            if (error) {
-                throw error;
-            }
-            getJob = results.rows[0];
-            res.render("appliedJobs/edit.ejs", {
-                getJob: getJob,
-                title: "Edit Applied Job",
-            });
+        const job = await getJobById(api_id);
+        getJob = job.rows[0];
+        res.render("appliedJobs/edit.ejs", {
+            getJob: getJob,
+            title: "Edit Applied Job",
         });
     } else {
         req.flash("success_msg", "You must logged-in first");
@@ -227,44 +215,23 @@ app.post("/users/register", async (req, res) => {
 
         // query the database to see if hte user exists already.
         // $1 will be replaced by the variable we will pass in....which is email
-        pool.query(
-            `SELECT * FROM users
-              WHERE email = $1`,
-            [email],
-            (err, results) => {
-                if (err) {
-                    console.log(err);
-                }
-                // just print out if there is a duplicate of emails in the DB
-                console.log(results.rows);
 
-                // if tehre is a duplicate...
-                if (results.rows.length > 0) {
-                    errors.push({ message: "Email already registered" });
-                    // re render the register page
-                    res.render("register", { errors });
-                } else {
-                    pool.query(
-                        `INSERT INTO users (firstname, lastname, email, password)
-                        VALUES ($1,$2,$3,$4)
-                        RETURNING id, password`,
-                        [firstname, lastname, email, hashedPassword],
-                        (err, results) => {
-                            if (err) {
-                                throw err;
-                            }
-                            console.log(results.rows);
-                            // pass a flash message to our redirect page
-                            req.flash(
-                                "success_msg",
-                                "You are now registered. Please log in"
-                            );
-                            res.redirect("/users/login");
-                        }
-                    );
-                }
-            }
-        );
+        const results = await getUserByEmail(email);
+        console.log("results after getUserByEmail", results);
+        if (results.rows.length > 0) {
+            errors.push({ message: "Email already registered" });
+            // re render the register page
+            res.render("register", { errors, title: "Register Page" });
+        } else {
+            await addUser(firstname, lastname, email, hashedPassword);
+            req.flash(
+                "success_msg",
+                "You are now registered. Please log in"
+            );
+
+            res.redirect("/users/login");
+        }
+
     }
 });
 
@@ -276,18 +243,22 @@ app.post(
         failureFlash: true,
     })
 );
+
 app.get("/jobs", async (req, res) => {
+    console.log("hello.")
     const baseURL = "https://jobs.github.com/positions.json";
 
     // just initialise it to one - it will break once the results = 0
-    let resultCount = 1,
-        onPage = 0; // used for each page that will have 50 results each
+    let resultCount = 50;
+    onPage = 0; // used for each page that will have 50 results each
 
     // hold all results of jobs in an array
     const allJobs = [];
-
+    let a = 0;
+    let clockInterval = setInterval(() => { a += 1 }, 1000)
+    console.log("clock = ", clockInterval);
     // fetch all pages
-    while (resultCount > 0) {
+    while (resultCount === 50) {
         // access the URL
         const res = await fetch(`${baseURL}?page=${onPage}`);
         // pulling out the json from the response
@@ -299,79 +270,45 @@ app.get("/jobs", async (req, res) => {
         console.log("got", resultCount, "jobs");
         onPage++;
     }
+
+    console.log("clock = ", a);
     console.log("Obtained: ", allJobs.length, "jobs total");
-    console.log(allJobs);
+    //console.log(allJobs);
     // const response = await axios.get("https://jobs.github.com/positions.json");
     // const listings = response.data;
-    const listings = allJobs;
+
     let newListings = allJobs;
     // Get jobs from database
-    pool.query(`select * from jobs`, (err, results) => {
-        if (err) {
-            console.log("error =", err);
-        }
-        results.rows.forEach((row) => {
-            console.log("row =", row.api_id);
-            for (let index = 0; index < newListings.length; index++) {
-                if (newListings[index].id === row.api_id) {
-                    console.log("spliced = ", newListings[index].id);
-                    newListings.splice(index, 1);
-                    break;
-                }
-            }
-        });
+    const { rows } = await getJobs();
 
-        newListings.forEach((listing) => {
-            console.log(listing.id);
-            pool.query(
-                `INSERT INTO jobs (api_id,type, url, created_at, company, company_url, location, title, description, how_to_apply, company_logo)
-                      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-                [
-                    listing.id,
-                    listing.type,
-                    listing.url,
-                    listing.created_at,
-                    listing.company,
-                    listing.company_url,
-                    listing.location,
-                    listing.title,
-                    listing.description,
-                    listing.how_to_apply,
-                    listing.company_logo,
-                ],
-                (err, results) => {
-                    if (err) {
-                        throw err;
-                    }
-                    // console.log(results.rows);
-                    // // pass a flash message to our redirect page
-                    // req.flash("success_msg", "You are now registered. Please log in");
-                    // res.redirect("/users/login");
-                }
-            );
-        });
+    // remove same jobs
+    rows.forEach((row) => {
+        for (let index = 0; index < newListings.length; index++) {
+            if (newListings[index].id === row.api_id) {
+                newListings.splice(index, 1);
+                break;
+            }
+        }
     });
 
-    await res.redirect("/users/dashboard");
-    // await res.send(allJobs[0]);
-    // res.send(response.data[0]);
+    // Add new listings
+    for (let i = 0; i < newListings.length; i++) {
+        console.log("listings[i] =", newListings[i]);
+        await saveJob(newListings[i]);
+    }
+
+    res.redirect("/users/dashboard");
+
 });
 
-app.get("/viewjobs", (req, res) => {
-    var getAllJobs = null;
-    // console.log(getAllJobs);
+app.get("/viewjobs", async (req, res) => {
+    const { rows } = await getJobs();
 
-    pool.query("SELECT * FROM jobs ORDER BY id ASC", (error, results) => {
-        if (error) {
-            throw error;
-        }
-        getAllJobs = results.rows;
-
-        res.render("show", {
-            getAllJobs: getAllJobs,
-            title: "Jobs Page",
-        });
+    res.render("show", {
+        getAllJobs: rows,
+        title: "Jobs Page",
     });
+
 });
 // app.get("/viewjobs", db.getAllJobs);
 
