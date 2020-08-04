@@ -64,15 +64,15 @@ VALUES
 
 
 
-create table userToJobs (
-    id SERIAL PRIMARY KEY NOT NULL,
-    user_id NUMERIC(4) NOT NULL,
-    api_id VARCHAR(50) NOT NULL
-    );
+-- create table userToJobs (
+--     id SERIAL PRIMARY KEY NOT NULL,
+--     user_id NUMERIC(4) NOT NULL,
+--     api_id VARCHAR(50) NOT NULL
+--     );
 
-INSERT INTO userToJobs (user_id,api_id) values (6,'100');
-INSERT INTO userToJobs (user_id,api_id) values (6,'300');
-INSERT INTO userToJobs (user_id,api_id) values (9,'200');
+-- INSERT INTO userToJobs (user_id,api_id) values (6,'100');
+-- INSERT INTO userToJobs (user_id,api_id) values (6,'300');
+-- INSERT INTO userToJobs (user_id,api_id) values (9,'200');
 
 -- Perhaps we need to implement a boolean column in users to denote if they have saved a job or not...(T/F). If a user goes to a saved jobs screen..if (F) - show no jobs saved ELSE (t) show jobs;
 -- Perhaps we need to implement a column in userToJobs to capture a message that "job no longer available"
@@ -99,3 +99,31 @@ select t1.api_id from jobs t1 LEFT JOIN userToJobs t2 ON t2.api_id = t1.api_id W
         -- ii. update status in USERTOJOBS to "Job no longer available". 
         -- NOTE: So when a user looks at this job, they can then delete this from their screen.
 
+CREATE TABLE usertojobs (
+    id SERIAL PRIMARY KEY,
+    job_id INTEGER,
+    user_id INTEGER,
+    api_id VARCHAR(50),
+    company VARCHAR(100),
+    role VARCHAR(100),
+    contactPerson VARCHAR(50),
+    dateOfApplication VARCHAR(10),
+    followUpDate VARCHAR(10),
+    interviewDate VARCHAR(10),
+    remarks VARCHAR(200),
+    userSaved BOOLEAN DEFAULT 'False',
+    userApplied BOOLEAN DEFAULT 'False',
+    FOREIGN KEY (job_id) REFERENCES jobs (id), 
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+
+-- INSERT INTO usertojobs (job_id,user_id, api_id, company,role, contactPerson, dateOfApplication, followUpDate, interviewDate, remarks, userSaved, userApplied) values (34,6, '
+--  5903afaa-3fcd-440e-a6ee-fed215987718','IBM','Full Stack','','1980-01-01','1990-02-02','2000-03-03','Notes go here','False', 'False');
+
+--  INSERT INTO usertojobs (job_id,user_id, api_id, company,role, contactPerson, dateOfApplication, followUpDate, interviewDate, remarks, userSaved, userApplied) values (34,6, '
+--  575ef862-46cc-4aa8-a464-31427c9e4c8f','IBM','Full Stack','','1980-01-01','1990-02-02','2000-03-03','Notes go here','False', 'False');
+
+ INSERT INTO usertojobs (job_id,user_id, api_id, company,role, contactPerson, dateOfApplication, followUpDate, interviewDate, remarks, userSaved, userApplied) values (1,6, '100','IBM','Full Stack','','1980-01-01','1990-02-02','2000-03-03','Notes go here','False', 'False');
+
+ INSERT INTO usertojobs (job_id,user_id, api_id, company,role, contactPerson, dateOfApplication, followUpDate, interviewDate, remarks, userSaved, userApplied) values (2,6, '200','IBM','Full Stack','','1980-01-01','1990-02-02','2000-03-03','Notes go here','False', 'False');
