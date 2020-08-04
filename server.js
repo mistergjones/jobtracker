@@ -211,19 +211,22 @@ app.delete("/appliedJobs/delete/:api_id", (req, res) => {
     console.log("reached to delete route");
     if (req.user.id) {
         var user_id = req.user.id;
-        var api_id = req.params.api_id
+        var api_id = req.params.api_id;
         console.log(api_id);
         //change the sql to update
-        pool.query(`DELETE FROM userToJobs WHERE api_id='${api_id}' and user_id=${user_id};`, (error, results) => {
-            if (error) {
-                throw error;
+        pool.query(
+            `DELETE FROM userToJobs WHERE api_id='${api_id}' and user_id=${user_id};`,
+            (error, results) => {
+                if (error) {
+                    throw error;
+                }
+                //   getJob = results.rows[0];
+                req.flash("success_msg", "Deleted successfully");
+                res.redirect("/appliedJobs");
+                //});
+                // });
             }
-            //   getJob = results.rows[0];
-            req.flash("success_msg", "Deleted successfully");
-            res.redirect("/appliedJobs");
-            //});
-            // });
-        });
+        );
     } else {
         req.flash("success_msg", "You must logged-in first");
         res.redirect("/users/login");
@@ -267,7 +270,6 @@ app.post("/users/register", async (req, res) => {
 
         // query the database to see if hte user exists already.
         // $1 will be replaced by the variable we will pass in....which is email
-<<<<<<< HEAD
 
         const results = await getUserByEmail(email);
         console.log("results after getUserByEmail", results);
@@ -281,7 +283,6 @@ app.post("/users/register", async (req, res) => {
 
             res.redirect("/users/login");
         }
-
     }
 });
 
