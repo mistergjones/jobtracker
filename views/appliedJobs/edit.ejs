@@ -1,87 +1,41 @@
 <%- include('../header.ejs')%>
 <div id="applied-jobs-wrapper">
-    <form
-        class="form-horizontal"
-        action="/appliedJobs/<%=getJob.api_id%>"
-        method="POST"
-    >
+    <form class="form-horizontal" action="/appliedJobs/<%=getJob.api_id%>" method="POST">
         <input name="_method" type="hidden" value="PUT" />
         <div class="form-group">
-            <label class="control-label col-sm-2" for="company-name"
-                >Company Name:</label
-            >
-            <input
-                type="text"
-                class="form-control"
-                name="companyName"
-                id="company-name"
-                value="<%=getJob.company%>"
-                readonly
-            />
+            <label class="control-label col-sm-2" for="company-name">Company Name:</label>
+            <input type="text" class="form-control" name="companyName" id="company-name" value="<%=getJob.company%>"
+                readonly />
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="role">Role:</label>
-            <input
-                type="text"
-                class="form-control"
-                id="role"
-                value="<%=getJob.title%>"
-                readonly
-            />
+            <input type="text" class="form-control" id="role" value="<%=getJob.title%>" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="contact-person"
-                >Contact Person:</label
-            >
-            <input
-                name="contact_person"
-                type="text"
-                class="form-control"
-                id="contact-person"
-                value="needs to update here"
-            />
+            <label class="control-label col-sm-2" for="contact-person">Contact Person:</label>
+            <input name="contact_person" type="text" class="form-control" id="contact-person"
+                value="<%=getJob.contactperson%>" />
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="application-date"
-                >Application Date:</label
-            >
-            <input
-                name="application_date"
-                type="date"
-                class="form-control col-sm-2"
-                id="application-date"
-            />
+            <label class="control-label col-sm-2" for="application-date">Application Date:</label>
+            <input name="application_date" type="date" class="form-control col-sm-2" id="application-date"
+                value="<%=getJob.dateofapplication%>" />
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="follow-date"
-                >Follow-up Date:</label
-            >
-            <input
-                name="follow_up_date"
-                type="date"
-                class="form-control"
-                id="follow-date"
-            />
+            <label class="control-label col-sm-2" for="follow-date">Follow-up Date:</label>
+            <input name="follow_up_date" type="date" class="form-control" id="follow-date"
+                value="<%=getJob.followupdate%>" />
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="interview-date"
-                >Interview Date:</label
-            >
-            <input
-                name="interview_date"
-                type="date"
-                class="form-control"
-                id="interview-date"
-            />
+            <label class="control-label col-sm-2" for="interview-date">Interview Date:</label>
+            <input name="interview_date" type="date" class="form-control" id="interview-date"
+                value="<%=getJob.interviewdate%>" />
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="remark">Remarks:</label>
-            <textarea
-                name="remarks"
-                type="date"
-                class="form-control"
-                id="remark"
-            ></textarea>
+            <textarea name="remarks" type="date" class="form-control" id="remark">
+                <%=getJob.remarks%>
+            </textarea>
         </div>
 
         <!-- <button type="submit" class="btn btn-warning">

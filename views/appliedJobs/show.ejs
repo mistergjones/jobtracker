@@ -23,11 +23,11 @@
         <td><a href="#" data-toggle="modal" data-target="#myModal<%=i%>">
             <%=savedJobs[i].title%>
           </a></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><%=savedJobs[i].contactperson%></td>
+        <td><%=savedJobs[i].applicationdate%></td>
+        <td><%=savedJobs[i].followupdate%></td>
+        <td><%=savedJobs[i].interviewdate%></td>
+        <td><%=savedJobs[i].remarks%></td>
         <td><a href="/appliedJobs/<%=savedJobs[i].api_id%>" class="btn btn-warning">Edit</a></td>
         <td>
           <form class="form-horizontal" action="/appliedJobs/delete/<%=savedJobs[i].api_id%>" method="POST">
