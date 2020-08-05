@@ -18,21 +18,19 @@
     <tbody>
       <tr>
         <% if(savedJobs.length > 0){ for(var i = 0;i < savedJobs.length;i++) { %>
-        <td style="vertical-align: middle;"><%=savedJobs[i].id%></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].company%></td>
-        <td style="vertical-align: middle;"><a href="#" data-toggle="modal" data-target="#myModal<%=i%>">
+        <td><%=savedJobs[i].id%></td>
+        <td><%=savedJobs[i].company%></td>
+        <td><a href="#" data-toggle="modal" data-target="#myModal<%=i%>">
             <%=savedJobs[i].title%>
           </a></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].contactperson%></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].applicationdate%></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].followupdate%></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].interviewdate%></td>
-        <td style="vertical-align: middle;"><%=savedJobs[i].remarks%></td>
-        <td style="vertical-align: middle;"><a href="/appliedJobs/<%=savedJobs[i].api_id%>"
-            class="btn btn-warning">Edit</a></td>
-        <td style="vertical-align: middle;">
-          <form style="vertical-align: middle;height: 100%; width:100%;background-color: yellow; "
-            action="/appliedJobs/delete/<%=savedJobs[i].api_id%>" method="POST">
+        <td><%=savedJobs[i].contactperson%></td>
+        <td><%=savedJobs[i].applicationdate%></td>
+        <td><%=savedJobs[i].followupdate%></td>
+        <td><%=savedJobs[i].interviewdate%></td>
+        <td><%=savedJobs[i].remarks%></td>
+        <td><a href="/appliedJobs/<%=savedJobs[i].api_id%>" class="btn btn-warning">Edit</a></td>
+        <td>
+          <form class="form-horizontal" action="/appliedJobs/delete/<%=savedJobs[i].api_id%>" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <button type="submit" onclick="return handleDeleteButton()"
               class="btn btn-danger delete-btn">Delete</button>
