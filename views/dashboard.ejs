@@ -37,7 +37,23 @@
     <!-- make the first letter of the firstname uppercase -->
     Welcome <%= user.charAt(0).toUpperCase()+ user.slice(1)%> to the DASHBOARD
 </h1>
-
+<div>
+    <%
+    var nowDate = new Date(); 
+    var date = `${nowDate.getFullYear()}-${(nowDate.getMonth()+1)<10?('0'+(nowDate.getMonth()+1)):(nowDate.getMonth()+1)}-${nowDate.getDate()<10?'0'+nowDate.getDate():nowDate.getDate()}`;%>
+    <% if(savedJobs.length > 0){ for(var i = 0;i < savedJobs.length;i++) { %>
+    <% if(savedJobs[i].followupdate === date){%>
+    <p class="alert-message">
+        <%= `Today, you have follow-up with ${savedJobs[i].company} for ${savedJobs[i].title} role.`%>
+    </p>
+    <%}%>
+    <%if(savedJobs[i].interviewdate === date){%>
+    <p class="alert-message">
+        <%= `Today, you have interview with ${savedJobs[i].company} for ${savedJobs[i].title} role.`%>
+    </p>
+    <%}%>
+    <%}}%>
+</div>
 <div class="grid-container">
     <div class="grid-item"><a href="/viewjobs">View all jobs</a></div>
     <div class="grid-item"><a href="/jobs">Refresh API</a></div>

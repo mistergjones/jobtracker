@@ -95,11 +95,20 @@ app.get("/users/login", checkAuthenticated, (req, res) => {
     res.render("login", { title: "Login Page" });
 });
 
-app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
-    res.render("dashboard", {
-        user: req.user.firstname,
-        title: "Dashboard Page",
-    });
+app.get("/users/dashboard", checkNotAuthenticated, async (req, res) => {
+    // console.log("req", typeof (req.user.id));
+    let savedJobs = [];
+    try {
+        savedJobs = await getSavedJobs(req.user.id);
+        // console.log("SAVED JOBS = ", savedJobs);
+        res.render("dashboard", {
+            savedJobs,
+            user: req.user.firstname,
+            title: "Dashboard Page",
+        });
+    } catch (error) {
+        console.log("error has occurred!", error);
+    }
 });
 
 //logout route
