@@ -5,10 +5,19 @@ const getSavedJobs = async (userId) => {
     const results = await getSavedJobIdsByUserId(userId);
     // console.log(results.length);
     // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    console.log("results = ", results);
     for (let i = 0; i < results.rows.length; i++) {
         const { rows } = await getJobById(results.rows[i].api_id);
-        savedJobs.push(rows[0]);
+        savedJobs.push({
+            ...rows[0],
+            contactperson: results.rows[i].contactperson,
+            applicationdate: results.rows[i].dateofapplication,
+            followupdate: results.rows[i].followupdate,
+            interviewdate: results.rows[i].interviewdate,
+            remarks: results.rows[i].remarks
+        });
     }
+
     // console.log(savedJobs.length);
     // console.log(savedJobs);
     // console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBASDFASFDSFSDAFSDAFADFDSAFFDAS");
@@ -22,8 +31,25 @@ const getJobById = async (jobId) => {
     return job;
 };
 
+const getSavedJobByUserIdandJobId = async (userId, jobId) => {
+    const sql = "SELECT * FROM userToJobs WHERE user_id = $1 AND api_id = $2";
+    const params = [userId, jobId];
+    const job = await runSql(sql, params);
+
+    const results = await getJobById(jobId);
+
+    console.log("results **** === ", results)
+    console.log("job = ", job);
+    return {
+        ...job.rows[0],
+        company: results.rows[0].company,
+        title: results.rows[0].title
+    };
+}
+
+
 const getSavedJobIdsByUserId = async (userId) => {
-    const sql = "SELECT api_id FROM userToJobs WHERE user_id = $1";
+    const sql = "SELECT * FROM userToJobs WHERE user_id = $1";
     const params = [userId];
     const savedJobIds = await runSql(sql, params);
     // console.log(savedJobIds.length);
@@ -69,4 +95,5 @@ module.exports = {
     saveJobIdsForUserId,
     getJobs,
     saveJob,
+    getSavedJobByUserIdandJobId
 };
