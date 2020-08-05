@@ -222,40 +222,54 @@ footer {
 h1 {
   text-align: center;
 }
-.grid-container {
+/* .grid-container {
   display: grid;
+  place-items: center;
   grid-gap: 10px;
   grid-template-columns: auto auto;
   background-color: #2196f3;
   padding: 10px;
-}
+} */
 
 /* the below is used for showing the job results. show.ejs */
 .grid-container {
   display: grid;
   grid-template: 50px / auto auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   background-color: #2196f3;
   padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
-.grid-container > div {
+.show-grid-container{
+  display: grid;
+  grid-template-columns: .5fr 1.2fr .5fr;
+  grid-gap: 10px;
+  background-color: #2196f3;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}
+/* .grid-container > div {
   background-color: rgba(255, 255, 255, 0.8);
-  /* text-align: center; */
+  /* text-align: center; 
   padding: 10px 0;
   font-size: 12px;
-}
+} */
 .grid-item {
-  display: grid;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  background-color: #d6e9fd;
   padding: 5px;
   font-size: 30px;
+  width:100%;
   text-align: center;
   align-items: center;
   justify-content: center;
 }
-
+.grid-item> strong{
+  padding: 0 10px;
+}
 #applied-jobs-wrapper {
   position: relative;
   margin: 25px 50px;
@@ -285,4 +299,32 @@ table>tbody>tr>td {
   display: grid;
   align-items: center;
   justify-content: center;
+}
+
+.modal-title{
+  font-weight: 600;
+}
+.modal-body {
+  font-size: medium;
+}
+.modal-span{
+  font-weight: 500;
+  text-decoration: underline;
+}
+.modal {
+  text-align: center;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  vertical-align:middle !important;
+}
+.form-horizontal{
+  display: inline !important;
+}
+
+.alert-message {
+  text-align: center;
+  color:red;
+  font-size: large;
+  border: 3px solid yellow;
 }

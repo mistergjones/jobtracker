@@ -71,22 +71,20 @@
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
-        <h4 class="modal-title">
+        <h2 class="modal-title">
           <%=`${savedJobs[i].company}, ${savedJobs[i].location} -
               ${savedJobs[i].title} (${savedJobs[i].type}) `%>
-        </h4>
+        </h2>
       </div>
       <div class="modal-body">
         <p><%-`${savedJobs[i].description} `%></p>
         <p>
-          How To Apply: <%-savedJobs[i].how_to_apply%> Company URL:
+          <span class="modal-span">How To Apply:</span> <%-savedJobs[i].how_to_apply%> Company URL:
           <a href="<%=savedJobs[i].company_url%>"><%=savedJobs[i].company_url%></a>
           <!-- <img src="<%-savedJobs[i].company_logo%>" alt=""> -->
         </p>
       </div>
       <div class="modal-footer">
-
-        <a class="btn btn-success" href="/saveJob/<%= savedJobs[i].api_id %>" />Save This Job</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">
           Close
         </button>
