@@ -34,7 +34,7 @@ const {
     getJobs,
     saveJob,
     getJobById,
-    getSavedJobByUserIdandJobId
+    getSavedJobByUserIdandJobId,
 } = require("./models/jobs");
 const { getUserByEmail, addUser } = require("./models/users");
 // middle ware
@@ -168,7 +168,7 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
 
         const job = await getSavedJobByUserIdandJobId(req.user.id, api_id);
         //getJob = job.rows[0];
-        console.log("getjob = ", job)
+        console.log("getjob = ", job);
         res.render("appliedJobs/edit.ejs", {
             getJob: job,
             title: "Edit Applied Job",
