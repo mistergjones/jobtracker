@@ -4,34 +4,43 @@
   <div class="header">
     <div class="header-banner">
       <center>
-        <h1>Job Tracker</h1>
+        <h1 class="head-logo">Job Tracker</h1>
       </center>
     </div>
     <nav>
       <ul>
-        <li class="active nav-link">
-          <a href="/"><i class="fa fa-home"></i>Home</a>
-        </li>
-        <li class="nav-link">
-          <a href="/about"><i class="fa fa-info-circle"></i>About Us</a>
-        </li>
-        <li class="nav-link">
-          <a href="#"><i class="fa fa-edit"></i>Jobs</a>
-        </li>
-        <li class="nav-link">
-          <a href="/contact"><i class="fa fa-phone"></i>Contact Us</a>
-        </li>
+        <a href="/">
+          <li class="nav-link">
+            <i class="fa fa-home"></i>Home
+          </li>
+        </a>
+        <a href="/about">
+          <li class="nav-link">
+            <i class="fa fa-info-circle"></i>About Us
+          </li>
+        </a>
+        <a href="/contact">
+          <li class="nav-link">
+            <i class="fa fa-phone"></i>Contact Us
+          </li>
+        </a>
         <% if(!locals.user){%>
-        <li class="nav-link">
-          <a href="/users/login"><i class="fa fa-user"></i>Login</a>
-        </li>
+        <a href="/users/login">
+          <li class="nav-link">
+            <i class="fa fa-user"></i>Login
+          </li>
+        </a>
         <%} else {%>
-        <li class="nav-link">
-          <a href="/users/dashboard"><i class="fa fa-tasks"></i>Dashboard</a>
-        </li>
-        <li class="nav-link">
-          <i class="fa fa-user"></i><a href="/users/logout">Logout</a>
-        </li>
+        <a href="/users/dashboard">
+          <li class="nav-link">
+            <i class="fa fa-tasks"></i>Dashboard
+          </li>
+        </a>
+        <a href="/users/logout">
+          <li class="nav-link">
+            <i class="fa fa-user"></i>Logout
+          </li>
+        </a>
         <%}%>
       </ul>
     </nav>

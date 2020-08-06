@@ -125,7 +125,7 @@ app.get("/saveJob/:app_id", async (req, res) => {
         let api_id = req.params.app_id;
         let user_id = req.user.id;
 
-        console.log({ api_id }, { user_id });
+        // console.log({ api_id }, { user_id });
         //saving to database
         await saveJobIdsForUserId(api_id, user_id);
         req.flash("success_msg", "You have saved the job");
@@ -231,7 +231,7 @@ app.post("/appliedJobs/:api_id", async (req, res) => {
 
 // delete applied jobs
 app.delete("/appliedJobs/delete/:api_id", (req, res) => {
-    console.log("reached to delete route");
+    // console.log("reached to delete route");
     if (req.user.id) {
         var user_id = req.user.id;
         var api_id = req.params.api_id;
@@ -257,11 +257,11 @@ app.delete("/appliedJobs/delete/:api_id", (req, res) => {
 });
 // using asynchronous
 app.post("/users/register", async (req, res) => {
-    console.log(req);
+    // console.log(req);
     // get variables from the form
     let { firstname, lastname, email, password, password2 } = req.body;
 
-    console.log(firstname, lastname, email, password, password2);
+    // console.log(firstname, lastname, email, password, password2);
 
     // for form validation if any errors
     let errors = [];
@@ -289,13 +289,13 @@ app.post("/users/register", async (req, res) => {
         // Remember, it is asynchronous hence the await command
         // parameters: password, # of rounds to encrypt
         let hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
+        // console.log(hashedPassword);
 
         // query the database to see if hte user exists already.
         // $1 will be replaced by the variable we will pass in....which is email
 
         const results = await getUserByEmail(email);
-        console.log("results after getUserByEmail", results);
+        // console.log("results after getUserByEmail", results);
         if (results.rows.length > 0) {
             errors.push({ message: "Email already registered" });
             // re render the register page
@@ -319,7 +319,7 @@ app.post(
 );
 
 app.get("/jobs", async (req, res) => {
-    console.log("hello.");
+    // console.log("hello.");
     const baseURL = "https://jobs.github.com/positions.json";
 
     // just initialise it to one - it will break once the results = 0
@@ -343,7 +343,7 @@ app.get("/jobs", async (req, res) => {
         allJobs.push(...jobs);
         // capture how many results appear on that appage
         resultCount = jobs.length;
-        console.log("got", resultCount, "jobs");
+        // console.log("got", resultCount, "jobs");
         onPage++;
     }
 
@@ -372,8 +372,8 @@ app.get("/jobs", async (req, res) => {
         console.log("listings[i] =", newListings[i]);
         await saveJob(newListings[i]);
     }
-
-    res.redirect("/users/dashboard");
+    res.redirect("/viewjobs");
+    // res.redirect("/users/dashboard");
 });
 
 app.get("/viewjobs", async (req, res) => {

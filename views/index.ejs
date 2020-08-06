@@ -1,9 +1,12 @@
 <%- include('header')%>
-<h1>Job Tracker Home page</h1>
 
 <% if (typeof message !== 'undefined' ) { %>
 <p><%= message %></p>
 <% } %>
-
-<a href="/users/login">Login</a>
+<div>
+    <h1 class="typing">Welcome to Job Tracker</h1>
+    <p class="typing-paragraph">
+        You can use this website to manage your job search experience.
+    </p>
+</div>
 <%- include('footer')%>

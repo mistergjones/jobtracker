@@ -233,9 +233,10 @@ h1 {
 
 /* the below is used for showing the job results. show.ejs */
 .grid-container {
+  margin: 5% 15%;
   display: grid;
-  grid-template: 50px / auto auto auto;
-  grid-template-columns: 1fr 1fr;
+  /* grid-template: 50px / auto auto auto; */
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px;
   background-color: #2196f3;
   padding: 10px;
@@ -327,4 +328,75 @@ table>tbody>tr>td {
   color:red;
   font-size: large;
   border: 3px solid yellow;
+}
+
+.control-label {
+  text-align: center;
+}
+
+.col-sm-4{
+  padding-right:1px !important;
+  padding-left:0 !important;
+}
+
+.loader {
+  display:none;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed;
+  top:50%;
+  left:50%;
+}
+.show{
+  display: block;
+}
+.hide {
+  display:none;
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.typing{
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typingAnim 5s steps(50);
+  color: black;
+}
+
+.typing-paragraph{
+  /* animation-delay: 4s; */
+  overflow: hidden;
+  white-space: nowrap;
+  animation: cssAnimation 5s steps(50) 5s;
+  color: black;
+  text-align: center;
+
+}
+@keyframes cssAnimation {
+  from{
+    width: 0;
+    visibility: hidden;
+  }
+  to   { 
+    width:100%;
+    visibility: visible;
+   }
+}
+
+@keyframes typingAnim{
+  from { width: 0 }
+  to { width: 100% }
 }
