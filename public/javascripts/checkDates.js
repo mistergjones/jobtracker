@@ -5,11 +5,11 @@ var computerDate = null;
 var currentComputerDate = null;
 var api_id = null;
 
-api_id = document.querySelector("#api-id").value;
-const iDate = document.querySelector("#interview-date");
-const aDate = document.querySelector("#application-date");
-const fDate = document.querySelector("#follow-date");
-const contact_person = document.querySelector("#contact-person");
+api_id = document.querySelector("#api_id").value;
+const iDate = document.querySelector("#interview_date");
+const aDate = document.querySelector("#application_date");
+const fDate = document.querySelector("#follow_date");
+const contact_person = document.querySelector("#contact_person");
 const remarks = document.querySelector("#remark");
 const gj_submit_button = document.querySelector("#gj-submit-button");
 const error = document.querySelector(".error");
@@ -73,16 +73,19 @@ const handleDateChange = (e) => {
     error.textContent = "";
     iDate.textContent = e.target.value;
     dateValidation.intDate = validateDate(e.target.value);
+    console.log(`In change: ${e.target.value}`);
 };
 
 const handleSubmit = (e) => {
     error.textContent = "";
-    e.preventDefault();
+
+    console.log("WEA RE IN TEH HANDLE SUBMIT FUNCTION");
 
     const { intDate } = dateValidation;
     if (!intDate.valid) {
         console.log(intDate.msg);
         error.textContent = intDate.msg;
+        e.preventDefault();
     } else {
         let params = {
             intDate: iDate.value,
@@ -95,10 +98,10 @@ const handleSubmit = (e) => {
         console.log("validation passed = ", params);
         var url = "/appliedJobs/" + api_id;
         console.log(url);
-        axios.post(url, params).then((res) => {
-            console.log(res);
-            document.body.innerHTML = res.data;
-        });
+        // axios.post(url, params).then((res) => {
+        //     console.log(res);
+        //     document.body.innerHTML = res.data;
+        // });
     }
 };
 

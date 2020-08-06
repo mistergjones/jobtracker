@@ -193,11 +193,11 @@ app.post("/appliedJobs/:api_id", async (req, res) => {
         // var interviewDate = req.body.interview_date;
 
         // the use of the following variables is derived from teh checkDates.js file and the use of using edit.ejs for values.
-        var contactPerson = req.body.contactPerson;
-        var applicationDate = req.body.applicationDate;
-        var followUpDate = req.body.followUpDate;
-        var interviewDate = req.body.intDate;
-        var remarks = req.body.remarks;
+        var contactPerson = req.body.contact_person;
+        var applicationDate = req.body.application_date;
+        var followUpDate = req.body.follow_date;
+        var interviewDate = req.body.interview_date;
+        var remarks = req.body.remark;
 
         console.log(`HERE WE: ${interviewDate}`);
         console.log(req.body);
