@@ -368,3 +368,35 @@ table>tbody>tr>td {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.typing{
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typingAnim 5s steps(50);
+  color: black;
+}
+
+.typing-paragraph{
+  /* animation-delay: 4s; */
+  overflow: hidden;
+  white-space: nowrap;
+  animation: cssAnimation 5s steps(50) 5s;
+  color: black;
+  text-align: center;
+
+}
+@keyframes cssAnimation {
+  from{
+    width: 0;
+    visibility: hidden;
+  }
+  to   { 
+    width:100%;
+    visibility: visible;
+   }
+}
+
+@keyframes typingAnim{
+  from { width: 0 }
+  to { width: 100% }
+}
