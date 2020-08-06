@@ -34,7 +34,7 @@ const {
     getJobs,
     saveJob,
     getJobById,
-    getSavedJobByUserIdandJobId
+    getSavedJobByUserIdandJobId,
 } = require("./models/jobs");
 const { getUserByEmail, addUser } = require("./models/users");
 // middle ware
@@ -168,7 +168,7 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
 
         const job = await getSavedJobByUserIdandJobId(req.user.id, api_id);
         //getJob = job.rows[0];
-        console.log("getjob = ", job)
+        console.log("getjob = ", job);
         res.render("appliedJobs/edit.ejs", {
             getJob: job,
             title: "Edit Applied Job",
@@ -178,21 +178,32 @@ app.get("/appliedJobs/:api_id", async (req, res) => {
         res.redirect("/users/login");
     }
 });
+
 //update applied job information
-app.put("/appliedJobs/:api_id", async (req, res) => {
+app.post("/appliedJobs/:api_id", async (req, res) => {
     console.log("reached to update route");
 
     if (req.user.id) {
         var getJob = null;
         var api_id = req.params.api_id;
-        var contactPerson = req.body.contact_person;
-        var applicationDate = req.body.application_date;
-        var followUpDate = req.body.follow_up_date;
-        var interviewDate = req.body.interview_date;
+        // var contactPerson = req.body.contact_person;
+
+        // var applicationDate = req.body.application_date;
+        // var followUpDate = req.body.follow_up_date;
+        // var interviewDate = req.body.interview_date;
+
+        // the use of the following variables is derived from teh checkDates.js file and the use of using edit.ejs for values.
+        var contactPerson = req.body.contactPerson;
+        var applicationDate = req.body.applicationDate;
+        var followUpDate = req.body.followUpDate;
+        var interviewDate = req.body.intDate;
         var remarks = req.body.remarks;
 
-        //change the sql to update
+        console.log(`HERE WE: ${interviewDate}`);
+        console.log(req.body);
 
+        // remove leading and trailing white space. For some reason, when the info is shown in the edit.ejs page, it seesm to append new lines / breaks etc.
+        remarks = remarks.replace(/^\s+|\s+$/g, "");
         pool.query(
             `UPDATE usertojobs SET 
             contactperson = '${contactPerson}',  
@@ -210,6 +221,7 @@ app.put("/appliedJobs/:api_id", async (req, res) => {
                 res.redirect("/appliedJobs");
             }
         );
+        pool.end;
         // });
     } else {
         req.flash("success_msg", "You must logged-in first");

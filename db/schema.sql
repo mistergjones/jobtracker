@@ -104,8 +104,6 @@ CREATE TABLE usertojobs (
     job_id INTEGER,
     user_id INTEGER,
     api_id VARCHAR(50),
-    company VARCHAR(100),
-    role VARCHAR(100),
     contactPerson VARCHAR(50),
     dateOfApplication VARCHAR(10),
     followUpDate VARCHAR(10),
