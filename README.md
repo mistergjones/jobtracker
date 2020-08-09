@@ -3,7 +3,7 @@
 -   [General info](#general-info)
 -   [JobTracker Link](#JobTracker-link)
 -   [MVP Deliverables](#necessary-MVP)
--   [To Do or Future Items](#to-do)
+-   [To Do or Future Items](#Future-Items)
 -   [Screenshots](#screenshots)
 -   [In-depth Features of Job Tracker](#in-depth-features-of-Job-Tracker)
 -   [Challenges](#challenges)
@@ -24,35 +24,53 @@ This application to demonstrate both client side and Server side technologies to
 ## JobTracker Link
 
 -   The link to the Job Tracker online application is here:
-    [https://t.b.c.herokuapp.com/]
+    [https://young-oasis-03810.herokuapp.com]
 -   Public access to ER Diagram / Schema, Kanban, User Stories and Wireframe link:
-    [https://whimsical.com/t.b.c]
+    [https://whimsical.com/7xHydLZc8NTdFPgRLJB16R]
+-   Scoping Document decscribing the MVP and requirements before any coding taking place
+    [https://drive.google.com/file/d/1JsB3I8G-WqzHJ68LK4I3m4V-_d-rv50U/view?usp=sharing]
 
 ## Necessary MVP
 
--   t.b.c
+Utilising Node, Express, JS, Bcrypt, Axios, Postgres, the application's MVP are the following deliverables:
 
-## To-Do
+-   A user can register their details and login to the application securely with their password being hashed in the database.
+-   A user can refresh a list of all available jobs via the 'github jobs' API.
+-   A user can view and save any particular job they like to a seperate list.
+-   If a user likes a role, they can submit and store key information (e.g. Application Date, Interview Date, Contact person etc) to track the progress.
+-   A user can delete a saved job where no longer applicable.
 
-Future items include:
+## Future-Items
 
--   t.b.c
+The following possible features could be included in other iterations:
+
+-   incorporate other API feeds into the database (i.e. Indeed.com API)
 
 ## Screenshots
 
-![Example screenshot](t.b.c)
+![Example screenshot]
 
 ## In-depth Features of Job Tracker
 
--   t.b.c
+-   Hasing of passwords when stored in the Postgres database.
+-   AXIOS is utilised for a RESTFUL API.
+-   Bootstrap was used to assist in visual design and consistency.
+-   EJS Templates were utilised ensuring consistency for each web page.
+-   A number of CDNs were utilised in the app. (Jquery, Bootstrap, Skeleton etc).
+-   Data error checking occurs on the Interview Date field.
 
 ## Challenges
 
--   t.b.c
+-   Ensuring Axios continues to obtain all jobs (Github pages API only allows 50 results per page) to be returned. If there was 347 jobs, the solution would need to cater for muliple pages.
+-   Hashing of passwords via Bcrypt and stored in a database.
 
 ## Approach Taken
 
--   t.b.c
+Given this was a group delivered, we treated it like an Agile project:
+
+-   Developed an initial Scope document that included an overall scope, a product feature breakdown and indicative database design.
+-   Twice daily stand-up sessions occured to agree on features to be developed next along with supporting each other.
+-   Frequent commits and rebasing of the code occured to ensure all project members had the latest build.
 
 ## Technologies Used
 
@@ -65,7 +83,7 @@ API:
 Backend: Node.js
 NPM Packages:
 
-1. express
+1. Express
 2. pg
 3. pg-escape
 4. body-parser
@@ -74,7 +92,9 @@ NPM Packages:
 7. axios
 8. nodemon
 
-Database: PostgreSQL
+Database:
+
+1. PostgreSQL
 
 Frontend:
 
@@ -82,12 +102,24 @@ Frontend:
 2. CSS
 3. JavaScript
 
-Deployment: Heroku
+Deployment:
 
-Version Control: Git
+1. Heroku
+
+3rd Party:
+
+1. Bootstrap
+2. Skeleton
+3. jQuery
+4. Font Awesome
+5. Axios
+
+Version Control:
+
+1. Git
 
 ## Download
 
 Download via:
 
--   t.b.c
+-   https://github.com/mistergjones/jobtracker.git
