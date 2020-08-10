@@ -533,3 +533,20 @@ ul {
 .our-team .cnt-block .follow-us li .fa:hover {
     color: #025a8e;
 }
+
+/* Original Solution found on Stackoverflow here:
+http://stackoverflow.com/questions/26573346/ios-safari-messes-up-input-type-date
+*/
+
+input[type="date"]
+{
+    display:block;
+  
+    /* Solution 1 */
+     -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em; 
+  
+    /* Solution 2 */
+    /* min-width: 96%; */
+}
