@@ -48,7 +48,7 @@ The following possible features could be included in other iterations:
 
 ## Screenshots
 
-![Example screenshot]
+![Example screenshot](screenshot.png)
 
 ## In-depth Features of Job Tracker
 
