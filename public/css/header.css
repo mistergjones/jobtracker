@@ -1,5 +1,6 @@
 .header {
   background-color: #2296f3;
+  background: linear-gradient(to right top, #5db19c, #2396f3);
   color: white;
 }
 .header h1 {
@@ -29,11 +30,13 @@ nav ul li a {
   color: white;
 }
 .active,
-nav ul li:hover {
+nav ul li:hover, nav ul li a:hover {
   background-color: rgb(80, 125, 131);
   border-radius: 3px;
+  color:white;
 }
 
 nav .fa {
   margin: 8px;
 }
+
