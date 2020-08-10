@@ -2,7 +2,11 @@
 *:focus {
     outline: none;
 }
-
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
 body {
     margin: 0;
     padding: 0;
@@ -532,21 +536,63 @@ ul {
 }
 .our-team .cnt-block .follow-us li .fa:hover {
     color: #025a8e;
+  }
+
+.typing{
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typingAnim 3s steps(50);
+  color: black;
 }
 
-/* Original Solution found on Stackoverflow here:
-http://stackoverflow.com/questions/26573346/ios-safari-messes-up-input-type-date
-*/
+.typing-paragraph{
+  overflow: hidden;
+  white-space: nowrap;
+  animation: cssAnimation 3s steps(50);
+  display: none;
+  text-align: center;
+  color: white;
+}
+@keyframes cssAnimation {
+  from{
+    visibility: hidden;
+    width: 0;
+  }
+  to{ 
+    width:100%;
+    visibility: visible;
+   }
+}
 
-input[type="date"]
-{
-    display:block;
-  
-    /* Solution 1 */
-     -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    min-height: 1.2em; 
-  
-    /* Solution 2 */
-    /* min-width: 96%; */
+@keyframes typingAnim{
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.home-main-logo{
+  display:grid;
+  place-items: center;
+  background-color: hsl(216,100%,94%);
+  background: linear-gradient(to right top, #2958039d, #2396f3);
+  margin: 0 auto;
+  border-radius: 10px;
+  width:60%;
+}
+.img-center-logo{
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+.header-logo{
+  display: float;
+  float:left;
+  width:100px;
+  height:100px;
+  margin-top:5px;
+  margin-left:25px;
+}
+.header-logo>img{
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
