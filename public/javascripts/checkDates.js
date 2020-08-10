@@ -47,7 +47,7 @@ const validateDate = (value) => {
         computerDate.toISOString().slice(0, 10).split("-").join("")
     );
     console.log(typeof currentComputerDate, currentComputerDate);
-
+    debugger;
     if (interviewDate < currentComputerDate) {
         console.log("Date not allowed");
         return {
@@ -81,7 +81,9 @@ const handleSubmit = (e) => {
 
     console.log("WEA RE IN TEH HANDLE SUBMIT FUNCTION");
 
-    const { intDate } = dateValidation;
+
+    dateValidation.intDate = validateDate(document.querySelector("#interview_date").value);
+    let { intDate } = dateValidation;
     if (!intDate.valid) {
         console.log(intDate.msg);
         error.textContent = intDate.msg;
@@ -102,6 +104,7 @@ const handleSubmit = (e) => {
         //     console.log(res);
         //     document.body.innerHTML = res.data;
         // });
+
     }
 };
 
